@@ -26,8 +26,8 @@ where
     ANSWERS is the path to the answers folder of a submitted method
     OUTPUT is the path to the folder where the results of the evaluation will be saved
 
-Example: 
->>> python pan19-cdaa-evaluator.py -i "/mydata/pan19-cdaa-development-corpus" -a "/mydata/pan19-answers" -o "/mydata/pan19-evaluation"
+Example:
+>>> python pan19-cdaa-evaluator.py -i "pan19_CDAA_trainingDataset" -a "results/svm" -o "results/svm"
 
 # References:
 @article{scikit-learn,
