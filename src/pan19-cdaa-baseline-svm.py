@@ -26,7 +26,7 @@
                                  Let P1 and P2 be the two maximum probabilities of training classes for a test document. If P1-P2<pt then the test document is assigned to the <UNK> class.
    
  Example:
-     > python pan19-cdaa-baseline.py -i "mydata/pan19-cdaa-development-corpus" -o "mydata/pan19-answers"
+     > python pan19-cdaa-baseline.py -i "pan19_CDAA_trainingDataset" -o "results/svm"
 """
 
 from __future__ import print_function
