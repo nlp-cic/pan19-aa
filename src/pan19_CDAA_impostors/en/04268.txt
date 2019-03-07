@@ -1,0 +1,91 @@
+more or less the same, as it binds the Display to the session. This allows the person running the Display to see what is happening in the Session.
+
+We then go on to bind the Session to the current Dimension, and the Dimension to the current Universe. While those last two were not technically necessary - considering the Session already exists in this Dimension and Universe - it helps for debug and for keeping stable loops and undefiled Graves.
+
+We also have an example of nested ~ATH loops. Nested loops are a powerful feature that allow you to start a loop only when another one executes. For example, in the example above, we have a nested loop which will begin running after the author dies. It Listens for the death of the Universe. Once the Universe dies, it executes and nulls the Universe.
+
+Nested ~ATH loops and a programming technique called !ATH go hand in hand. !ATH is fairly advanced, and keeping stable loops while using it can be complicated, but the way !ATH works is enough to more than counterbalance the damage it can do.
+
+In most programming languages, an !-operator checks for the opposite f something. The same is true for ~ATH. !ATH checks for your condition, but only executes it while it is alive, rather than dead. For example...
+
+
+ import author Ziddia; 
+
+
+
+import Universe u; 
+
+
+
+import Dimension d; 
+
+
+
+import Object o1, o2; 
+
+
+
+import Session s; 
+
+
+
+~ATH(!author) { 
+
+
+
+    SET[o1, author]; 
+
+
+
+    SET[o2, GET[Globals.DISPLAY]]; 
+
+
+
+    BIND[o1, s]; 
+
+
+
+    BIND[o2, s]; 
+
+
+
+    BIND[s, d]; 
+
+
+
+    BIND[d, u]; 
+
+
+
+    ~ATH(u) { 
+
+
+
+        SET[u, NULL]; 
+
+
+
+    } EXECUTE(THIS); 
+
+
+
+} EXECUTE(THIS); 
+
+
+
+THIS.DIE(); 
+
+
+This is exactly the same as the other example, excluding one little detail - I used !ATH on the author Object. By using !ATH, I have caused this program to execute when I am alive.
+
+Note that there is presently a sandbox in place when it comes to ~ATH programs that use Universe, Dimension, Session, and Author which prevents directly deleting or killing objects. This sandbox is also in place for all !ATH programs, regardless of content. It was implemented in an attempt to nullify the effects of viruses such as the Mobius Double Reacharound Virus. This sandbox is removed for applications that are signed by the government (applications that are currently known to have this removed are the Government's own Low-Orbital ~ATH Cannon, which is used to combat terrorism, and Sburb).
+
+Now that we know basic ~ATH Programming, we will move on to learning all the rest of the keys and their functions.
+
+~ATH is a great language to work with, especially now that you know about !ATH and the BIND key. But just how much more can you do with a script?
+
+It turns out that you can do a hell of a lot more. We've barely brushed the surface of keys, and we haven't even begun to look at the Standard ~ATH Kit. ~ATH has so much more to offer than just what I've shown you. As such, the next two chapters are dedicated to learning the functions of most (if not all) keys.
+
+To begin, here's a list of all keys and their description in the official ~ATH documentation (check in your ~MYATH panel for a link to the docs). The words in the brackets are the arguments they take, and are generally fairly self-explanatory.
+
+- ~ATH(Object): The key representing a main script loop. - EXECUTE(Script): The key representing an execution statement. Equivalent to GET[Globals.CURRENTSCRIPT].COMMANDPARSER.EXECUTE(Script). - THIS: A key representation of the Script object being used. - NULL: Nothing. Generally used as a fail-safe in loops which fail to execute. - import: Key used for definitions and pre-execution binding. - author: Key used to represent the creator of the script. Equivalent to GET[Globals.CURRENTSCRIPT].AUTHOR. - SET[Object, Object]: Key used to assign values. - GET[Object]: Key used to check values. - BIND[Object, Object]: Key used to bind two Objects together. - KILL[Object]: Key for killing an Object instance. This is banned when Sandbox is in place (the majority of ~ATH programs will experience this). - SPLIT[Object, Object]: Key for splitting an Object into two streams. Splits the first argument, not the second. Assigns the original to the first Object, the copy to the second. - COMB[Object, Object]: The BIND key for streams. - STREAM[Stream]: Gets a Stream Object. - BIFURCATE[Object]: Splits an Object into two mirror streams. Advanced and extreme programming technique. - CAKE[Script]: Calls a ^CAKE script for execution. - ~IF(Condition): Checks a condition. - ~WHILE(Condition): Executes a piece of code while a condition is true. - ~ELSIF(Condition

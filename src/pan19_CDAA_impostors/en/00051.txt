@@ -1,0 +1,29 @@
+attributing this sense of violation to whichever faceless, anonymous cunt had interfered with her free will.  She took a deep, steadying breath and squared her shoulders.  Reframe the issue, that was the trick of it: the problem right now wasn’t that someone had assaulted the sanctity of her mind, it was that she was momentarily stranded in the godforsaken wilds of Canada.  With Snape.  Who, it had to be said, hadn’t improved with time.
+
+He had seated himself against the cabin wall, and the dog was draped across his lap, clearly content to be the center of his attention.  “I talk too much, don’t I, Bella-nitím?” His voice, though quiet, carried over to where she stood in the doorway.  He was combing tufts of hair out of the dog’s flank, and feathery wisps of it drifted off on the crisp autumn breeze. “You know, nisîmis, there was a long time when I didn’t talk to anybody.  Didn’t want to, I mean.  I don’t know when that changed.” 
+
+She bit the inside of her lip, suddenly loathe to intrude.  Embarrassing, to see Snape without his armor.  The classroom tyrant she’d spent six years of her life trying to impress was still there, driving the mercurial shifts of his temper, flourishing in the casual savageries he’d tossed her way.  But who the bloody hell was this recluse, flannel and braids and woodsmoke and quiet conversations with an overgrown rug?  She stepped back from the door, closed it softly, and then swung it open with vigour.  The clink of the latch swinging free ought to be warning enough to alert him to the necessity of returning to form.  Professor Snape she could deal with – if only because Professor Snape had a plan to get her out of here.
+
+He looked up as she approached, and nudged the dog up, “Alright Bel, up you get.  Her winter coat’s coming in; I’d be ankle-deep in fur if I didn’t spend half my day brushing this lazy beast out.”  He rose, and slapped (rather ineffectively) at the clinging white hairs on his clothing, “Gets bloody everywhere.”
+
+That had been insufficiently Snape-y for her needs of the moment.  Time to get this back on-track. “Something I’m curious about,” she began, “About effect windows.  I mean, always assuming that the metaverse construct for magic is valid, still, we learned windows were binary – they were either open, or not.  And a spell lasts just as long as it keeps the window open.”
+
+“That’s the classic model, yes.  Funny thing, I am actually literate enough to have read those books, too – Standard Book of Spells, 7th year set text, wasn’t it?” He paused, perhaps to evaluate her response to this sneer.  After a moment he continued, his voice falling into a familiar lecturing cadence, “The classic model is wrong, an effect window is best characterized in a modified Bayesian probability framework.”
+
+This was firmer ground. “Go on.”
+
+“You really haven’t read this? What’ve you been doing with your life, I thought your hobby was eating books.”
+
+She vented a long-suffering sigh through her nose, and refused to rise to his bait.
+
+“Fine, fine.  It’s a multidimensional probability space but for simplicity’s sake, just think about a standard bell curve, a Gaussian normal distribution.” He stooped to snag a branch off the ground, and sketched a curve in the dirt, “The top of the curve is the maximum likelihood, and the density,” he hatched in the area beneath the curve, “is the probability.”
+
+“I know that.  I don’t need a basic maths review.”
+
+“I’m getting there.  So the simplest way to think about an effect window is that it occupies this space, here under the majority of the curve – where it’s highly probable that it’s open.  And the dimensions of the curve – how tall or wide it is – defines how long a spell lasts.  But out here on the tails,” he tapped the edges of the curve that tapered off to nothingness, “there’s still a minute probability that the window remains open.  It’s the classic Schrödinger conundrum – the window’s both open and closed depending upon the quantum universe.”
+
+She could feel the frown furrowing her brow.  This was bizarre, and yet she could actually follow it, could see how it might work.  Except—“But when the curve approaches zero or one, when it flattens out – that’s an infinite line, it never actually reaches either point, just gets infinitely close.”
+
+His quicksilver smile flickered again, there and gone except for the slight scrunching of his eyes that lingered as he assessed her. “Precisely.  Entropy.  What do you think spell residue actually is, Granger?
+
+“You’re looking a bit pole-axed, there,” he put in helpfully, when she

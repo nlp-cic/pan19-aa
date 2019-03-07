@@ -1,0 +1,57 @@
+"No... but it can, easily."
+
+"At least for testing purposes," said Radek.
+
+"Yeah, and maybe in general."
+
+"Also, it should offer several alternatives."
+
+"Not that you do that."
+
+"The program can be better than me."
+
+"Absolutely. I can set that up right now," said Rodney, opening the code. "Maybe you should be able to weight the importance of different factors in a given situation--you know, keeping the system running versus speed versus reducing collateral damage..."
+
+"Of course, the options would change depending on the parameters of the problem."
+
+"True, but there are some universals. You know, you probably should have been involved in this project from the beginning."
+
+"I was going to say," said Radek modestly.
+
+ 
+
+Wednesday
+
+Rodney decided, after fixing the most egregious errors, that the appropriate punishment for the lab rats was to make them clean up the mess they'd created, and he set them to it, checking on them sporadically, while he and Radek holed up in a conference room and worked on the program.
+
+It turned out that Radek had a recent and ongoing interest in artificial intelligence. He was surprisingly knowledgeable about psychobiology and weirdly fond of talking about "the human machine." Together they created an unstoppable flood of ideas: how to replicate, approximate, and improve upon human decision-making algorithms; how to provide the program with suitable information; how to create a framework for self-improvement, teaching the program to learn.
+
+In the evening they moved to the mess because Rodney was starving. Sheppard was just leaving as they came in and he shot Rodney a thumbs-up. Rodney was confused for a moment, and then remembered that, as far as Sheppard was concerned, he was involved in a scheme to convince Radek to stay by being kind to him. Well, that had fallen by the wayside some time ago. Still, it had sort of happened, without his meaning it to. He hadn't really been actively mean, anyway, not in any way that counted. He'd called Radek an idiot ten minutes ago, but it was in the heat of a coding argument and he deserved it, and anyway, Rodney had never been more certain that he wasn't taking it personally. It said a lot, for example, that Radek currently felt comfortable enough with Rodney to put his hand over Rodney's face and push him away while he was talking.
+
+"Go over there. Just watch," said Radek, drawing the keyboard close. "It's easier to do it than to explain it."
+
+"But it's easier to shoot you down after you've explained it than after you've done it," said Rodney.
+
+"Go eat a cake."
+
+In a fit of altruism Rodney brought back four helpings of cake, so that Radek could have one. He needed it to keep up his energy for all that superfluous coding.
+
+"You're reinventing the wheel," said Rodney over his shoulder. "Go back to the beginning. What's the first thing we did?"
+
+"That was different. We needed..." Radek tabbed over and read the code. "Oh. I am an idiot."
+
+"Right. You're really not, though," said Rodney. "You shouldn't let your proximity to me lead you to underestimate your own intelligence, which, objectively, is quite... I mean, if it weren't for me... Well, you'd be dead, and so would everyone here, but: maybe you wouldn't have all died quite as soon as I have been known to suggest, because I bet you would have stepped up to the plate."
+
+Radek smiled slowly, really touched. "Thank you, Rodney," he said. "That is the nicest thing you have ever said to me."
+
+Rodney waved his hand, an "it's nothing" gesture. People were right. Help others, and you do help yourself! He felt glowy and warm, and he couldn't keep a grin off his face.
+
+"I will remember you said that," said Radek, "when I am on Earth."
+
+Rodney's smile abruptly twisted into a scowl. Right. That. Of course he hadn't really believed that a sort of niceish time on a beach planet and some honeyed mumbling would make Radek change his career and life plans, but then, actually, he had. He felt disgusted and cheap: he'd given away a genuine compliment for nothing. So much for being nice!
+
+"Give me that," he said, grabbing the computer. "You're wasting perfectly good keystrokes."
+
+"I am in the middle of a line, Rodney."
+
+"The lights are still flickering!" Rodney yelled. "Don't you think that's a little more important? Go, go fix it, and while you're down there, you better boost up morale with the staff. I think they're all in tears, and if they're not, I'll give them something

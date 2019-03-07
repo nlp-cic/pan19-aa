@@ -1,0 +1,63 @@
+this, I want to make it very clear that you have no obligation towards us.” This was probably a conversation they should be having with a translator present, Genji thought bitterly. For a moment he wished he’d been more applied in high school instead of dicking around with swords and underage drinking all the time. Then he remembered that school was boring and at least he’d made good use of the years he’d had with a fleshy body. “If you want, you can stay with us until you get better, not get involved in any of Overwatch’s fights, and leave this base as soon as you can stand without owing us a single Euro for the treatment.” Morrison hesitated. “Technically, you could leave now, if you wanted. But that would be pretty difficult for you, what with all the walking.”
+
+ 
+
+“But you want me to tell you about my family.”
+
+ 
+
+“That’s part of it, yes.” Morrison leaned further forward in his chair. “Whatever you know of your family’s business would be invaluable to us, and the sooner the better. That kind of info is very time sensitive. Though given that they think you’re dead ratherd than snitching, they were probably in no hurry to change passcodes and safe houses. You’d help us take down a criminal empire that has been a thorn in our side for years, you’d have protection for as long as you need, and you’ll probably sleep a whole lot easier knowing the people who tried to have you killed are behind bars.”
+
+ 
+
+Genji doubted it. He’d seen his father and uncles come and go from courthouses all the time as a kid. Uncle Shiro had liked to joke that the reason he insisted on wearing kosode in this day and age was so he could just drop a sleeve to show his tattoo and save himself the trouble of killing the poor bastard who’d tried to arrest him. “What’s the other part?”
+
+ 
+
+“It might seem hard to believe right now, but that body you got there is the finest piece of military-grade prosthetics in the world.” Genji looked down at the loose thread in his bedsheet. “I hear you’re quite the fighter. It’ll take a while, but you can be as good as you were again. Better, even - you’d be surprised what they can put into a prosthetic these days.” He remembered Dr. Lindholm’s arm and...didn’t shudder. “You don’t have to decide now. You sleep on it, and you get better, and then you tell me. But remember -- you can help us fight the bastards who did this to you. You can be part of the Overwatch family, as soon as you -- “
+
+ 
+
+“I will kill my brother” Genji blurted out. “No one else. You have to promise.”
+
+ 
+
+Morrison leaned back in his chair again, rubbing his neck. He looked at the wall for a while, frowning, and finally sighed. “I can’t officially promise that. On account that it’s generally called murder if you don’t have a trial first.” His eyes were never this piercing in pictures. “But I sure as hell ain’t gonna stand in your way, kid.”
+
+ 
+
+Genji had never been this eager to do his homework in his life.
+
+
+          (See the end of the chapter for  notes.)
+          
+
+“I’m telling you, the ankles aren’t the problem. The balance algorithms from regular leg prosthetics should work fine. It’s the core muscles - they’re not compensating correctly, there’s something wrong with our code there. If we didn’t have to write it from scratch…”
+
+ 
+
+“No, look at his knees when he falls - they’re correcting a second too late, just like the ankles. Can we double check the neural connection there? If it’s too slow -- “
+
+ 
+
+“The hardware is fine, Paul. We already checked all the connections. Honestly, you’re all worrying too much, I think he should just keep trying. It always takes time for the brain to adapt to the new input from a prosthetic, it makes sense that it’d be harder with a prosthetic this size.”
+
+ 
+
+“Guys, we have NO IDEA what we’re doing with the torso, seriously, no one’s done this kind of work before - well, that one guy in Canada, but the paper’s behind a paywall.”
+
+ 
+
+“Holy shit, dude, you do remember our budget, right? We can get the paper if you want, but I’m telling you we don’t need it. Our code is fine.”
+
+ 
+
+“Can we run some more joint tests? Maybe they’re not lubricated enough?”
+
+ 
+
+“Look, all omnics have this kind of balance algorithm, I’m sure we can adapt something from them, there’s gotta be an open source basic gait code on GitHub -- “
+
+ 
+
+“I’M NOT COPYPASTING THE MOST IMPORTANT MOMENT OF MY CAREER FROM GITHUB

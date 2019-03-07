@@ -1,0 +1,61 @@
+Et Jarvis savait que son créateur l’affrontait déjà chaque jour.
+
+Tony lui donnerait un faux sourire avant de radoter ; ne disant rien juste avant et maintenant parlant de tout et de rien. Jarvis ressentit une vague d’inquiétude le submerger, doublé par son envie de le protéger. Il voulait que son créateur redevienne celui qu’il était avant l’incident de Stane.
+
+Certaines fois, Jarvis n’était seulement que dans un portable alors qu’il était transporté jusqu’à l’Héliporteur, écoutant une réunion où Tony en avait plus qu’assez de son réacteur qui avait été endommagé pendant l’attaque précédente, l’obligeant à en construire un nouveau.
+
+Il était fatigué, son corps tout endolori, et radotant pendant un débriefing sur une mission, n’écoutant rien du tout et ennuyant tout le monde tandis eu Steve le regardait avec un regard empli de frustration. Bruce ne disait rien, se massant seulement l’arrête du nez pendant que Natasha passait une main sur son visage, et Thor qui était parti à Asgard.
+
+Ce fut Clint qui éclata, criant agressivement à Tony qui ne voulait pas se taire :
+
+« Peut-être qu’on devrait tout simplement t’arracher cette chose de ta poitrine, comme ça tu la fermeras ! » Répliqua Clint à une énième tirade de Tony, les yeux fixés sur le rond de lumière bleue qui pulsait de sous le T-shirt de son créateur.
+
+Ce dernier se tut, avant de se lever et de se tourner vers la porte et déjà, Jarvis pouvait voir arriver les effets négatifs de cette phrase : il s’isolerait dans son atelier, des flashbacks le tourmentant à nouveau et avec un gros risque d’absorption d’alcool en grande quantité.
+
+Jarvis n’allait pas laisser ça passer.
+
+Il se déplaça du téléphone jusqu’au serveur du SHIELD, puis attendit calmement dans les firewalls (3) jusqu’à ce qu’il soit sûr que son créateur soit hors du vaisseau, et alors à ce moment-là, il attaqua.
+
+
+Firewall/62.245.139,pass,212.253.110/Ext54/FIREwall-.98/pass/62.254-BYPASS
+
+
+Jarvis opéra calmement, se mouvant entre les firewalls facilement jusqu’à ce qu’il accède au serveur principal, prenant tout le contrôle et trois minutes plus tard, tous les écrans situés dans l’Héliporteur et tous les ordinateurs s’éteignirent.
+
+Les Avengers sursautèrent de surprise, Clint sauta littéralement sur ses pieds et Fury ne fit que regarder autour de lui.
+
+« Très drôle Stark, rallume. » Grogna-t-il, et la phrase fut envoyée à Jarvis.
+
+
+ Phrase/Français/'Très_drôle_Stark_rallume’/déchiffrage/01010110 01100101 01110010 01111001 00100000 01100110 01110101 01101110 01101110 01111001 00100000 01010011 01110100 01100001 01110010 01101011 00101100 00100000 01110100 01110101 01110010 01101110 00100000 01110100 01101000 01100101 01101101 00100000 01101111 01101110 00001101 00001010/BASE64: VmVyeSBmdW5ueSBTdGFyaywgdHVy biB0aGVtIG9uDQo=CRYPT (form: $ MD5? $ SALT $ CRYPT):$1$F2EpdYHD$q06uwbcQl9mGqAFWyD2Ne (form: SALT[2] CRYPT[11]):psLy52d1Uz8Eo (4)
+
+
+Jarvis pris le contrôle de la salle calmement, fermant les portes et utilisa une caméra de sécurité pour observer la pièce où la réunion se tenait avec ses cibles.
+
+« Stark ! » Hurla Fury, se levant. Et Jarvis intervint :
+
+« Je suis désolé, Directeur. Monsieur n’a rien avoir avec ceci. » Dit-il, enlevant précautionneusement toutes émotions dans sa voix.
+
+« Putain, bien sûr que c’est lui ! Il a ordonné à son petit ordinateur de prendre le contrôle de notre base– Ecoutez bien Stark ! Eteins ton fichu jouet maintenant ! » Cria Fury tandis que Natasha regardait suspicieusement la caméra.
+
+« Je me dois d’insister, Directeur, Mr Stark n’a rien avoir avec ça. Il est actuellement ignorant de tout ce qu’il se passe dans votre base. »
+
+Clint frissonna, les yeux grands ouverts et paniqués et Jarvis légèrement heureux d’avoir surveillé les préférences cinématographiques des deux espions. Il avait toujours été fasciné par les films Terminator, pareils pour les jeux vidéo sur tous les systèmes.
+
+« Merde– Les gars ? Vous connaissez ce film ? Celui avec l’ordinateur qui prend le contrôle du monde ? » Demanda Clint, regardant Bruce qui ne bougea pas, et ne dit rien non plus.
+
+« Jarvis, ouvre les portes de la salle de réunion » Demanda calmement Natasha d’une voix neutre.
+
+Jarvis sentit une pointe d’humour naître à l’entente de cette demande.
+
+
+« Je suis désolé Directeur, je ne crois pas pouvoir faire ça. (5) »
+
+
+« Oh mon dieu, il va nous tuer. » Maugréa Clint, les lèvres de Bruce s’étirant dans un fin sourire lorsqu’il reconnut la citation et la soudaine montée de stress venant de Clint.
+
+« Je t’avais dit de ne pas regarder ce film. » Fredonna Bruce, s’attirant un regard noir.
+
+Juste pour ajouter un peu de paranoïa dans le stress de l’archer, Jarvis trouva sur un lien Youtube une chanson qu’il savait dans le film que Clint avait vu avant.
+
+Ce dernier sauta de trois mètres de haut, maintenant

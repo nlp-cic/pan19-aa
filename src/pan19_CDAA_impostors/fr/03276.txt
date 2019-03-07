@@ -1,0 +1,41 @@
+— »
+
+Pause. Marche arrière. Pause. Lecture.
+
+« — un algorithme d'optimisation qui s'inspire de la sélection naturelle. Donc, au lieu d'explorer successivement toutes les branches d'un arbre de recherche, vous générez et entretenez une population de solutions, puis vous évaluez leur pertinence à chaque génération selon leur degré d'adaptation et en fonction des données initiales du problème. Les solutions non compétitives sont éliminées, et de nouvelles solutions sont créées à partir des solutions restantes, en appliquant les principes de la génétique – la recombinaison, où vous échangez des éléments d'une solution avec les éléments correspondants d'une autre, et la mutation, où vous modifiez un élément unique dans une solution donnée. La génération suivante va donc favoriser des sous-ensembles du champ de possibilités qui ont déjà prouvé qu'ils produisaient des résultats viables. Répétez autant de fois que nécessaire. Vous finirez par atteindre un seuil critique, qui, s'il n'est pas la solution idéale, est au moins une solution satisfaisante.
+
+Bien entendu, dans un logiciel de go, vous évaluez des solutions correspondant au plateau de jeu, ou, d'un point de vue plus pratique, à une zone plus restreinte de ce plateau. Vous devez donc imaginer chaque coup possible à n'importe quel moment comme un organisme à part, dont l'« espèce » regrouperait tous les organismes « vivants » ou viables.
+
+Bon, pour être honnête, je n'ai jamais été convaincu que c'était le meilleur — »
+
+Pause. Un moment passe.
+
+Avance rapide. Pause. Lecture.
+
+« — vous dire que ce que nous appelons la conscience est une propriété émergente du système nerveux central. En d'autres termes, que deux et deux font parfois cinq, et que nous ne sommes pas toujours capables de comprendre d'où vient cette unité supplémentaire. La position de l'Église Catholique Romaine, je crois, est qu'à un moment ou un autre, pendant les millions d'années qui ont été nécessaires pour que les premiers hominidés deviennent l'Homo sapiens, Dieu est intervenu et a introduit une âme dans notre enveloppe corporelle : comme une pièce de monnaie dans une tirelire. Ou, selon l'expression que préfèrent les médias, un esprit dans la machine...
+
+Ce qui nous gêne à propos de « Sai », appartient en fait au champ de la métaphysique, pas de la physique. C'est un programme. Mais vous savez, on peut dire la même chose de nous. Nous étions déjà en train d'appliquer un certain nombre de stratégies heuristiques, à conception non-cartésienne, basées sur notre observation de la nature ou de l'esprit humain : en plus de la programmation génétique, les algorithmes évolutionnistes, les réseaux neuronaux… les ordinateurs à ADN, et même, la soi-disant bio-ingénierie. Donc tout dépend à quel point vous voulez considérer ça comme un phénomène surnaturel.
+
+Si vous voulez partir du principe qu'il existe un programmeur dans la nature, alors peut-être. Ou plutôt – pourquoi pas – inversez les choses. Considérez tous les problèmes NP-complets comme une partie de go. Mais vous sortez du cadre des objets que la science peut étudier. »
+
+Pause.
+
+
+V.
+
+
+La femme déclare : « À la fin, ce n'est pas son cœur qui a lâché. Plus aucun organe ne fonctionnait. Il parvenait à peine à respirer. Même quand il a commencé à perdre conscience de plus en plus longtemps, je pouvais sentir son cœur battre sous ma main, avec force et lenteur… Tant de force. Il ne voulait pas s'arrêter.
+
+Akira est resté près de lui, et Shindou-san aussi était souvent là, avec nous. Ce jour-là, quand Kouyo s'est réveillé — »
+
+Elle baisse les yeux, comme si le fait de traduire ces souvenirs en mots lui coûte un effort surhumain.
+
+« — Il a demandé à Shindou-san de jouer une partie contre lui. Il ne pouvait plus parler, mais il pouvait encore bouger la main, un petit peu. Suffisamment pour tracer des signes sur la paume de quelqu'un d'autre. Il avait commencé à jouer contre Akira, comme ça, quelques coups à la fois : chaque fois qu'il était réveillé. La partie n'était pas finie. Nous avons apporté un autre goban et nous les avons laissés seuls ensemble, comme il l'avait demandé.
+
+Akira a insisté pour que je me repose. Je pense que lui aussi a dû s'endormir un peu, sans le vouloir. Il était aussi fatigué que moi… Shindou-kun est revenu nous réveiller presque trois heures plus tard. Touya-sensei s'est endormi, il a dit. Mais il était très pâle.
+
+C'était la dernière fois. Kouyo ne s'est plus jamais réveillé, après. »
+
+Vous regardez vos mains sur vos genoux, qui s'ouvrent et se referment. Vous dites : « Alors… Shindou-san est la dernière personne à avoir parlé à votre mari. »
+
+La femme hoche la tête. « Plus tard dans la soirée, » elle continue, « j'ai remarqué
