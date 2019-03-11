@@ -1,0 +1,7 @@
+Agregué algunas funciones para extraer características, no he descargado eclipse, subí los archivos individualmente
+en el main esta comentado como ejecutar el programa con parámetros (ahorita los datos están fijos), también en el main esta
+como agregar funciones para la extraccion de características en el archivo feature_extraction.
+
+Voy a estar checando una cosas relacionadas con la selección y reducción de características.
+Si puedes hacer mientras los metodos para considerar los n-gramas de puntuaciones (puedes apoyarte 
+con la librería string.punctuation), tiene algunos signos de puntuación para que los consideres.
