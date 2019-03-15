@@ -43,7 +43,67 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn import preprocessing
 from sklearn.calibration import CalibratedClassifierCV
 
-def represent_text(text,n):
+
+import nltk
+def convert_text_in_length_of_words(text):
+    tokens = nltk.word_tokenize(text)
+    new_txt = ''
+    
+    for tok in tokens:
+        size_tok = len(tok)
+        new_txt += str(size_tok)
+    
+    #print(new_txt)
+    return new_txt
+    
+def convert_text_in_ranges_of_words(text):
+    tokens = nltk.word_tokenize(text)
+    new_txt = ''
+    
+    for tok in tokens:
+        size_tok = len(tok)
+        if size_tok <= 3:
+            new_txt += 's'
+        else:
+            if size_tok > 8:
+                new_txt += 'l'
+            else:
+                new_txt += 'm'
+    
+    #print(new_txt)
+    return new_txt
+
+from string import punctuation
+def punct_as_set():
+    set_punct = set()
+    for ch in punctuation:
+        set_punct.add(ch)
+        
+    return set_punct
+
+def extract_punct(text):
+    new_txt = ''
+    set_punct = punct_as_set()
+    
+    for ch in text:
+        if ch in set_punct:
+            new_txt += ch
+    
+    return new_txt
+
+def represent_text(text,n,type_ngram):
+    
+    if type_ngram == 'punct':
+        text = extract_punct(text)
+    else:
+        if type_ngram == 'struct':
+            #text = convert_text_in_length_of_words(text)
+            text = convert_text_in_ranges_of_words(text)
+        else:
+            if type_ngram != 'regular':
+                print('ERROR: -typ argument has to be one of these {regular, punct, struct}')
+                parser.exit(1)
+    
     # Extracts all character 'n'-grams from  a 'text'
     if n>0:
         tokens = [text[i:i+n] for i in range(len(text)-n+1)]
@@ -62,11 +122,11 @@ def read_files(path,label):
         f.close()
     return texts
 
-def extract_vocabulary(texts,n,ft):
+def extract_vocabulary(texts,n,ft,type_ngram):
     # Extracts all characer 'n'-grams occurring at least 'ft' times in a set of 'texts'
     occurrences=defaultdict(int)
     for (text,label) in texts:
-        text_occurrences=represent_text(text,n)
+        text_occurrences=represent_text(text,n,type_ngram)
         for ngram in text_occurrences:
             if ngram in occurrences:
                 occurrences[ngram]+=text_occurrences[ngram]
@@ -78,7 +138,7 @@ def extract_vocabulary(texts,n,ft):
             vocabulary.append(i)
     return vocabulary
 
-def baseline(path,outpath,n=3,ft=5,pt=0.1):
+def baseline(path,outpath,n=3,ft=5,pt=0.1, type_ngram='regular'):
     start_time = time.time()
     # Reading information about the collection
     infocollection = path+os.sep+'collection-info.json'
@@ -104,7 +164,7 @@ def baseline(path,outpath,n=3,ft=5,pt=0.1):
             train_docs.extend(read_files(path+os.sep+problem,candidate))
         train_texts = [text for i,(text,label) in enumerate(train_docs)]
         train_labels = [label for i,(text,label) in enumerate(train_docs)]
-        vocabulary = extract_vocabulary(train_docs,n,ft)
+        vocabulary = extract_vocabulary(train_docs,n,ft,type_ngram)
         vectorizer = CountVectorizer(analyzer='char',ngram_range=(n,n),lowercase=False,vocabulary=vocabulary)
         train_data = vectorizer.fit_transform(train_texts)
         train_data = train_data.astype(float)
@@ -144,6 +204,10 @@ def baseline(path,outpath,n=3,ft=5,pt=0.1):
         pathlen=len(path+os.sep+problem+os.sep+unk_folder+os.sep)
         for i,v in enumerate(predictions):
             out_data.append({'unknown-text': unk_filelist[i][pathlen:], 'predicted-author': v})
+        
+        import pathlib
+        pathlib.Path(outpath).mkdir(parents=True, exist_ok=True)
+
         with open(outpath+os.sep+'answers-'+problem+'.json', 'w') as f:
             json.dump(out_data, f, indent=4)
         print('\t', 'answers saved to file','answers-'+problem+'.json')
@@ -157,6 +221,7 @@ def main():
     parser.add_argument('-n', type=int, default=3, help='n-gram order (default=3)')
     parser.add_argument('-ft', type=int, default=5, help='frequency threshold (default=5)')
     parser.add_argument('-pt', type=float, default=0.1, help='probability threshold for the reject option (default=0.1')
+    parser.add_argument('-typ', type=str, default='regular', help='type of ngram to use {regular, punct, struct} (default=regular')
     args = parser.parse_args()
     if not args.i:
         print('ERROR: The input folder is required')
@@ -165,7 +230,8 @@ def main():
         print('ERROR: The output folder is required')
         parser.exit(1)
     
-    baseline(args.i, args.o, args.n, args.ft, args.pt)
+    baseline(args.i, args.o, args.n, args.ft, args.pt, args.typ)
 
 if __name__ == '__main__':
     main()
+    #convert_text_in_length_of_words("""At eight o'clock on Thursday morning... Arthur didn't feel very good.""")
