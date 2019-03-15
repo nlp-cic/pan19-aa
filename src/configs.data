@@ -1,0 +1,5 @@
+-i "src\\pan19_CDAA_trainingDataset" -o "src\\results\\punct\\2gram" -n 2
+-i "src\\pan19_CDAA_trainingDataset" -o "src\\results\\structure\\ranges\\6gram" -n 6 -pt 0.05
+
+-i "src\\pan19_CDAA_trainingDataset" -a "src\\results\\punct\\2gram" -o "src\\results\\punct\\2gram"
+-i "src\\pan19_CDAA_trainingDataset" -a "src\\results\\structure\\ranges\\6gram" -o "src\\results\\structure\\ranges\\6gram"
