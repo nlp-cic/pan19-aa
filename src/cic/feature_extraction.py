@@ -1,3 +1,7 @@
+import logging
+logger = logging.getLogger('TreeTagger')
+logger.propagate = False
+
 from nltk import tokenize
 from collections import defaultdict
 import re
@@ -30,7 +34,6 @@ def pos_tag_n_grams(*arg):
 	text = re.sub(r" +", " ", re.sub(r"\.", "\. ", pre_proc_text(arg[0])))
 	n = [1]#range(1, 6)
 
-	#tagger = TreeTagger(language=current_language)
 	tagger = ttw.TreeTagger(TAGLANG=(current_language[0:2] if current_language[0:2] != "sp" else "es"))
 	values = tagger.tag_text(text)
 
@@ -83,7 +86,7 @@ def func_stop_words(*arg):
 
 
 def untyped_character_n_grams(*args):
-	sizes = range(2, 8)
+	sizes = range(3, 4)#range(2, 8)
 	untyped = []
 	text = pre_proc_text(args[0])
 
