@@ -43,6 +43,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn import preprocessing
 from sklearn.calibration import CalibratedClassifierCV
 
+from pan19evaluator import evaluate_all
 
 import nltk
 def convert_text_in_length_of_words(text):
@@ -102,7 +103,7 @@ def represent_text(text,n,type_ngram):
         else:
             if type_ngram != 'regular':
                 print('ERROR: -typ argument has to be one of these {regular, punct, struct}')
-                parser.exit(1)
+                exit(1)
     
     # Extracts all character 'n'-grams from  a 'text'
     if n>0:
@@ -214,7 +215,6 @@ def baseline(path,outpath,n=3,ft=5,pt=0.1, type_ngram='regular'):
     print('elapsed time:', time.time() - start_time)
 
 def main():
-    parser = argparse.ArgumentParser()
     parser = argparse.ArgumentParser(description='PAN-19 Baseline Authorship Attribution Method')
     parser.add_argument('-i', type=str, help='Path to the main folder of a collection of attribution problems')
     parser.add_argument('-o', type=str, help='Path to an output folder')
@@ -230,8 +230,13 @@ def main():
         print('ERROR: The output folder is required')
         parser.exit(1)
     
-    baseline(args.i, args.o, args.n, args.ft, args.pt, args.typ)
-
+    output_folder = args.o+os.sep+args.typ+os.sep+str(args.n) 
+    print(output_folder)
+    baseline(args.i, output_folder, args.n, args.ft, args.pt, args.typ)
+    
+    # call evaluator
+    evaluate_all(args.i, output_folder, output_folder)
+    
 if __name__ == '__main__':
     main()
     #convert_text_in_length_of_words("""At eight o'clock on Thursday morning... Arthur didn't feel very good.""")
