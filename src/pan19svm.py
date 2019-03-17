@@ -239,4 +239,3 @@ def main():
     
 if __name__ == '__main__':
     main()
-    #convert_text_in_length_of_words("""At eight o'clock on Thursday morning... Arthur didn't feel very good.""")
