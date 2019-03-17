@@ -231,11 +231,32 @@ def main():
         parser.exit(1)
     
     output_folder = args.o+os.sep+args.typ+os.sep+str(args.n) 
-    print(output_folder)
-    baseline(args.i, output_folder, args.n, args.ft, args.pt, args.typ)
+    print('output folder:  '+output_folder+'\n')
     
-    # call evaluator
+    baseline(args.i, output_folder, args.n, args.ft, args.pt, args.typ)
     evaluate_all(args.i, output_folder, output_folder)
     
+    # extract current score
+    result_file = output_folder+os.sep+'out.json'
+    with open(result_file, 'r') as f:
+        result_json = json.load(f)  
+        current_value = result_json['overall_score']
+    
+    # check if current result it is best than best results per level
+    paths_results = [args.o, args.o+os.sep+args.typ, output_folder]
+    for pr in paths_results:
+        if os.path.exists(pr+os.sep+'best_result'):
+            with open(pr+os.sep+'best_result', 'r') as f:
+                result_json = json.load(f)  
+                best_value = result_json['best_score']
+        else:    
+            best_value = .0
+            
+        if current_value > best_value:
+            with open(pr+os.sep+'best_result', 'w') as f:
+                json.dump({'best_score':current_value,'typ':args.typ,'ngram':args.n,'pt':args.pt,'ft':args.ft}, f, indent=4)
+            
+            if pr == args.o:
+                print('New best result: '+str(current_value))
 if __name__ == '__main__':
     main()
