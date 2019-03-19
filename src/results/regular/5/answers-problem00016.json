@@ -33,7 +33,7 @@
     },
     {
         "unknown-text": "unknown00009.txt",
-        "predicted-author": "candidate00006"
+        "predicted-author": "<UNK>"
     },
     {
         "unknown-text": "unknown00010.txt",
@@ -165,7 +165,7 @@
     },
     {
         "unknown-text": "unknown00042.txt",
-        "predicted-author": "candidate00001"
+        "predicted-author": "<UNK>"
     },
     {
         "unknown-text": "unknown00043.txt",
@@ -213,11 +213,11 @@
     },
     {
         "unknown-text": "unknown00054.txt",
-        "predicted-author": "candidate00001"
+        "predicted-author": "<UNK>"
     },
     {
         "unknown-text": "unknown00055.txt",
-        "predicted-author": "candidate00002"
+        "predicted-author": "<UNK>"
     },
     {
         "unknown-text": "unknown00056.txt",
@@ -453,7 +453,7 @@
     },
     {
         "unknown-text": "unknown00114.txt",
-        "predicted-author": "candidate00005"
+        "predicted-author": "<UNK>"
     },
     {
         "unknown-text": "unknown00115.txt",
@@ -493,7 +493,7 @@
     },
     {
         "unknown-text": "unknown00124.txt",
-        "predicted-author": "candidate00005"
+        "predicted-author": "<UNK>"
     },
     {
         "unknown-text": "unknown00125.txt",
@@ -549,7 +549,7 @@
     },
     {
         "unknown-text": "unknown00138.txt",
-        "predicted-author": "candidate00003"
+        "predicted-author": "<UNK>"
     },
     {
         "unknown-text": "unknown00139.txt",

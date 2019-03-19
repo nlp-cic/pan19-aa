@@ -54,7 +54,6 @@ def convert_text_in_length_of_words(text):
         size_tok = len(tok)
         new_txt += str(size_tok)
     
-    #print(new_txt)
     return new_txt
     
 def convert_text_in_ranges_of_words(text):
@@ -71,7 +70,6 @@ def convert_text_in_ranges_of_words(text):
             else:
                 new_txt += 'm'
     
-    #print(new_txt)
     return new_txt
 
 from string import punctuation
@@ -85,11 +83,16 @@ def punct_as_set():
 def extract_punct(text):
     new_txt = ''
     set_punct = punct_as_set()
+    #set_accents = {'á','Á','é','É','í','Í','ó','Ó','ú','Ú','ñ','Ñ','ü'}
     
     for ch in text:
         if ch in set_punct:
             new_txt += ch
-    
+    '''
+    print(punctuation)
+    print(text)
+    print(new_txt)
+    '''
     return new_txt
 
 def represent_text(text,n,type_ngram):
@@ -230,12 +233,32 @@ def main():
         print('ERROR: The output folder is required')
         parser.exit(1)
     
+    '''
     output_folder = args.o+os.sep+args.typ+os.sep+str(args.n) 
     print('output folder:  '+output_folder+'\n')
     
-    baseline(args.i, output_folder, args.n, args.ft, args.pt, args.typ)
+    # execute methods
+    baseline(args.i, output_folder, args.n, args.ft, pt, args.typ)
     evaluate_all(args.i, output_folder, output_folder)
+    update_results(args.o,args.typ,args.n,args.pt,args.ft,output_folder)
+    '''
     
+    from numpy import arange
+    for ngram in range(7,11,1):
+        # create output folder
+        output_folder = args.o+os.sep+args.typ+os.sep+str(ngram) 
+        print('output folder:  '+output_folder+'\n')
+        
+        for pt in arange(0.01,0.1,0.01):
+            # execute methods
+            print('*** ngram: '+str(ngram)+' probThr: '+str(pt)+' ***')
+            
+            baseline(args.i, output_folder, ngram, args.ft, pt, args.typ)
+            evaluate_all(args.i, output_folder, output_folder)
+            update_results(args.o,args.typ,ngram,pt,args.ft,output_folder)
+    
+                
+def update_results(o,typ,n,pt,ft,output_folder):
     # extract current score
     result_file = output_folder+os.sep+'out.json'
     with open(result_file, 'r') as f:
@@ -243,20 +266,29 @@ def main():
         current_value = result_json['overall_score']
     
     # check if current result it is best than best results per level
-    paths_results = [args.o, args.o+os.sep+args.typ, output_folder]
+    paths_results = [o, o+os.sep+typ, output_folder]
     for pr in paths_results:
         if os.path.exists(pr+os.sep+'best_result'):
             with open(pr+os.sep+'best_result', 'r') as f:
                 result_json = json.load(f)  
                 best_value = result_json['best_score']
         else:    
-            best_value = .0
+            best_value = -1.0
             
         if current_value > best_value:
             with open(pr+os.sep+'best_result', 'w') as f:
-                json.dump({'best_score':current_value,'typ':args.typ,'ngram':args.n,'pt':args.pt,'ft':args.ft}, f, indent=4)
+                json.dump({'best_score':current_value,'typ':typ,'ngram':n,'pt':pt,'ft':ft}, f, indent=4)
             
-            if pr == args.o:
+            if pr == o:
                 print('New best result: '+str(current_value))
+
 if __name__ == '__main__':
     main()
+    #extract_punct('.,|653&*%%@#%$gfdgfd @!')
+    
+    
+    
+    
+    
+    
+    
