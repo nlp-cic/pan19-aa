@@ -36,6 +36,8 @@ import json
 import argparse
 import time
 import codecs
+import pathlib
+import pandas as pd
 from collections import defaultdict
 from sklearn.svm import SVC
 from sklearn.multiclass import OneVsRestClassifier
@@ -43,70 +45,32 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn import preprocessing
 from sklearn.calibration import CalibratedClassifierCV
 
-from pan19evaluator import evaluate_all
-
-import nltk
-def convert_text_in_length_of_words(text):
-    tokens = nltk.word_tokenize(text)
-    new_txt = ''
-    
-    for tok in tokens:
-        size_tok = len(tok)
-        new_txt += str(size_tok)
-    
-    return new_txt
-    
-def convert_text_in_ranges_of_words(text):
-    tokens = nltk.word_tokenize(text)
-    new_txt = ''
-    
-    for tok in tokens:
-        size_tok = len(tok)
-        if size_tok <= 3:
-            new_txt += 's'
-        else:
-            if size_tok > 8:
-                new_txt += 'l'
-            else:
-                new_txt += 'm'
-    
-    return new_txt
-
-from string import punctuation
-def punct_as_set():
-    set_punct = set()
-    for ch in punctuation:
-        set_punct.add(ch)
-        
-    return set_punct
-
-def extract_punct(text):
-    new_txt = ''
-    set_punct = punct_as_set()
-    #set_accents = {'á','Á','é','É','í','Í','ó','Ó','ú','Ú','ñ','Ñ','ü'}
-    
-    for ch in text:
-        if ch in set_punct:
-            new_txt += ch
-    '''
-    print(punctuation)
-    print(text)
-    print(new_txt)
-    '''
-    return new_txt
+from util import empty_call, regular, reg_low, update_results, get_score
+from struct_ import length_words, range_words_2, range_words_3, range_words_4, range_words_5, \
+length_sent_by_words, range_sent_by_words_3, range_sent_by_chars_5
+from punct import cons
+from vowel import vowels, vowels_with_withesp
+from evaluator import evaluate_all
 
 def represent_text(text,n,type_ngram):
     
-    if type_ngram == 'punct':
-        text = extract_punct(text)
-    else:
-        if type_ngram == 'struct':
-            #text = convert_text_in_length_of_words(text)
-            text = convert_text_in_ranges_of_words(text)
-        else:
-            if type_ngram != 'regular':
-                print('ERROR: -typ argument has to be one of these {regular, punct, struct}')
-                exit(1)
+    switcher = {
+        'regular': regular,
+        'reg_low': reg_low,
+        'struct_len_word': length_words,
+        'struct_len_sent': length_sent_by_words,
+        'struct_range_word_2': range_words_2,
+        'struct_range_word_3': range_words_3,
+        'struct_range_word_4': range_words_4,
+        'struct_range_word_5': range_words_5,
+        'struct_range_sent_word_3': range_sent_by_words_3,
+        'struct_range_sent_char_5': range_sent_by_chars_5,
+        'punct': cons,
+        'vow': vowels,
+        'vow_whit': vowels_with_withesp
+    }
+    func = switcher.get(type_ngram, empty_call)
+    text = func(text)
     
     # Extracts all character 'n'-grams from  a 'text'
     if n>0:
@@ -129,7 +93,7 @@ def read_files(path,label):
 def extract_vocabulary(texts,n,ft,type_ngram):
     # Extracts all characer 'n'-grams occurring at least 'ft' times in a set of 'texts'
     occurrences=defaultdict(int)
-    for (text,label) in texts:
+    for (text, label) in texts:
         text_occurrences=represent_text(text,n,type_ngram)
         for ngram in text_occurrences:
             if ngram in occurrences:
@@ -148,6 +112,7 @@ def baseline(path,outpath,n=3,ft=5,pt=0.1, type_ngram='regular'):
     infocollection = path+os.sep+'collection-info.json'
     problems = []
     language = []
+    probs = []
     with open(infocollection, 'r') as f:
         for attrib in json.load(f):
             problems.append(attrib['problem-name'])
@@ -209,13 +174,14 @@ def baseline(path,outpath,n=3,ft=5,pt=0.1, type_ngram='regular'):
         for i,v in enumerate(predictions):
             out_data.append({'unknown-text': unk_filelist[i][pathlen:], 'predicted-author': v})
         
-        import pathlib
+        probs.append(proba)
         pathlib.Path(outpath).mkdir(parents=True, exist_ok=True)
-
+        
         with open(outpath+os.sep+'answers-'+problem+'.json', 'w') as f:
             json.dump(out_data, f, indent=4)
         print('\t', 'answers saved to file','answers-'+problem+'.json')
     print('elapsed time:', time.time() - start_time)
+    return probs
 
 def main():
     parser = argparse.ArgumentParser(description='PAN-19 Baseline Authorship Attribution Method')
@@ -238,57 +204,43 @@ def main():
     print('output folder:  '+output_folder+'\n')
     
     # execute methods
-    baseline(args.i, output_folder, args.n, args.ft, pt, args.typ)
+    baseline(args.i, output_folder, args.n, args.ft, args.pt, args.typ)
     evaluate_all(args.i, output_folder, output_folder)
     update_results(args.o,args.typ,args.n,args.pt,args.ft,output_folder)
     '''
     
     from numpy import arange
-    for ngram in range(7,11,1):
+    for ngram in range(1,9,1):
         # create output folder
         output_folder = args.o+os.sep+args.typ+os.sep+str(ngram) 
         print('output folder:  '+output_folder+'\n')
         
-        for pt in arange(0.01,0.1,0.01):
+        for pt in arange(0.01,0.02,0.01):
             # execute methods
             print('*** ngram: '+str(ngram)+' probThr: '+str(pt)+' ***')
             
-            baseline(args.i, output_folder, ngram, args.ft, pt, args.typ)
+            probs = baseline(args.i, output_folder, ngram, args.ft, pt, args.typ)
             evaluate_all(args.i, output_folder, output_folder)
-            update_results(args.o,args.typ,ngram,pt,args.ft,output_folder)
-    
-                
-def update_results(o,typ,n,pt,ft,output_folder):
-    # extract current score
-    result_file = output_folder+os.sep+'out.json'
-    with open(result_file, 'r') as f:
-        result_json = json.load(f)  
-        current_value = result_json['overall_score']
-    
-    # check if current result it is best than best results per level
-    paths_results = [o, o+os.sep+typ, output_folder]
-    for pr in paths_results:
-        if os.path.exists(pr+os.sep+'best_result'):
-            with open(pr+os.sep+'best_result', 'r') as f:
-                result_json = json.load(f)  
-                best_value = result_json['best_score']
-        else:    
-            best_value = -1.0
-            
-        if current_value > best_value:
-            with open(pr+os.sep+'best_result', 'w') as f:
-                json.dump({'best_score':current_value,'typ':typ,'ngram':n,'pt':pt,'ft':ft}, f, indent=4)
-            
-            if pr == o:
-                print('New best result: '+str(current_value))
+            update_results(args.o,args.typ,ngram,pt,args.ft,output_folder, probs)
 
+def unify(methods, ngrams):
+    list_meth = methods.split('&')
+    list_ngrs = ngrams.split('&')
+    if len(list_meth) != len(list_ngrs):
+        print('ERROR the number of methods and ngrams must be the same')
+        exit(1)
+    
+    for i in enumerate(len(list_meth)):
+        path_method = 'results'+os.sep+list_meth[i]+os.sep+list_ngrs[i]
+        if not os.path.exists(path_method):
+            print(path_method+' doesnt exists')
+            continue
+        
+        current_score = get_score(path_method)
+        
 if __name__ == '__main__':
     main()
-    #extract_punct('.,|653&*%%@#%$gfdgfd @!')
-    
-    
-    
-    
-    
-    
+
+
+  
     

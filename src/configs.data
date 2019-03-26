@@ -1,1 +1,20 @@
 -i "src\\pan19_CDAA_trainingDataset" -o "src\\results" -n 3 -pt 0.01  -typ "punct"
+
+set_punct = str_as_set(punctuation+whitespace+'¡¿')
+    #set_punct = punct_as_set(punctuation+'¡¿')
+    set_acc_0 = str_as_set(ascii_letters+digits)
+    set_acc_1 = str_as_set('áéíóúÁÉÍÓÚ') 
+    set_acc_2 = str_as_set('àèìòùÀÈÌÒÙ')
+    set_acc_3 = str_as_set('âêîôûÂÊÎÔÛ')
+    set_acc_4 = str_as_set('äëïöüÄËÏÖÜ')
+    set_acc_5 = str_as_set('ñÑ')
+    set_acc_6 = str_as_set('çÇ')
+    set_vowels = str_as_set('aeiouáéíóúàèìòùâêîôûäëïöüAEIOUÁÉÍÓÚÀÈÌÒÙÂÊÎÔÛÄËÏÖÜ')
+    
+    *ngramas posicionales
+    *no se tienen en cuenta mayusculas y minusculas
+    *el count vectorizer tiene un rango de ngramas
+    *usar tf_idf
+    *vocabulario para que sea el mismo entre train y test (creo que no hace falta)
+    *ver si es lo mismo aplicar el max abs scaler directo 
+    *tokenize.word_tokenize(text=text, language=lang)
