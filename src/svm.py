@@ -49,8 +49,8 @@ from numpy import arange
 from util import empty_call, regular, reg_low, update_results
 from struct_ import length_words, range_words_2, range_words_3, range_words_4, range_words_5, \
 length_sent_by_words, range_sent_by_words_3, range_sent_by_chars_5
-from punct import cons
-from vowel import vowels, vowels_with_withesp
+from punct import punct_, whitesp, acc, vow, cons, up, acc_vow_up
+from vowel import vowels, vowels_with_stars, vowels_with_withesp
 from evaluator import evaluate_all
 
 def represent_text2(text, type_ngram):
@@ -65,8 +65,15 @@ def represent_text2(text, type_ngram):
         'struct_range_word_5': range_words_5,
         'struct_range_sent_word_3': range_sent_by_words_3,
         'struct_range_sent_char_5': range_sent_by_chars_5,
-        'punct': cons,
+        'punct_punct': punct_,
+        'punct_whitesp': whitesp,
+        'punct_acc': acc,
+        'punct_vow': vow,
+        'punct_cons': cons,
+        'punct_up': up,
+        'punct_acc_vow_up': acc_vow_up,
         'vow': vowels,
+        'vow_star': vowels_with_stars,
         'vow_whit': vowels_with_withesp
     }
     func = switcher.get(type_ngram, empty_call)
@@ -220,10 +227,10 @@ def main():
 
 def run_exhaustive(i, o, typ, ft):
     min_ngram = 1
-    max_ngram = 9
-    min_pt = 0.01
-    max_pt = 0.1
-    incr_pt = 0.01
+    max_ngram = 5
+    min_pt = 0.1
+    max_pt = 0.2
+    incr_pt = 0.1
     
     for ngram in range(min_ngram, max_ngram,1):
         for pt in arange(min_pt, max_pt, incr_pt):
@@ -244,17 +251,26 @@ def meta_run(i, o, ft):
                             struct_range_word_5,
                             struct_range_sent_word_3
                             struct_range_sent_char_5,
-                            punct
+                            punct_punct
+                            punct_whitesp
+                            punct_acc
+                            punct_vow
+                            punct_cons
+                            punct_up
+                            punct_acc_vow_up
                             vow
-                            vow_whit'''
+                            vow_star
+                            vow_whit
+                            regular
+                            reg_low'''
     for meth in methods.split('\n'):
         meth = meth.strip()
         print('Run exhaustive in method '+meth)
         run_exhaustive(i, o, meth, ft)
 
 if __name__ == '__main__':
-    main()
-    #meta_run('i', 'o', 'ft')
+    #main()
+    meta_run("src\\pan19_CDAA_trainingDataset", "src\\results_countVec", 5)
     
 
   

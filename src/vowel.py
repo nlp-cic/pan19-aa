@@ -17,6 +17,19 @@ def vowels(text):
             new_txt += 'v'
         elif ch in set_letters:
             new_txt += 'c'
+
+    return new_txt
+
+def vowels_with_stars(text):
+    
+    set_vowels, set_letters = get_sets()
+    new_txt = ''
+    
+    for ch in text.lower():
+        if ch in set_vowels:
+            new_txt += 'v'
+        elif ch in set_letters:
+            new_txt += 'c'
         else:
             new_txt += '*'
             

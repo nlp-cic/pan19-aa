@@ -8,7 +8,7 @@ consonants = 'bcdfghjklmnpqrstvwxzçñ'
 vowels = 'aeiouyáéíóúàèìòùâêîôûäëïöüÿæœ'
 
 def get_all(text):
-    return punct(text)+whitesp(text)+acc(text)
+    return punct_(text)+whitesp(text)+acc(text)
 
 def trans_rare(text):
     set_common = str_as_set(ascii_letters+digits+whitespace+punctuation+accents)
@@ -24,7 +24,7 @@ def trans_rare(text):
 def rare(text):
     return text.lower().translate(str.maketrans('', '', ascii_letters+digits+whitespace+punctuation+accents))
 
-def punct(text):
+def punct_(text):
     return trans_rare(text.lower()).translate(str.maketrans('', '', ascii_letters+digits+whitespace+accents))
 
 def whitesp(text):
@@ -74,17 +74,8 @@ def acc_vow_up(text):
 
     return new_txt
 
-def punct_with_whitesp(text):
-    new_txt = ''
-    set_punct_whitesp = str_as_set(punctuation+'¡¿«—»'+whitespace)
-    set_unused = str_as_set(ascii_letters+digits)
-    
-    for ch in text.lower():
-        
-        if ch in set_punct_whitesp:
-            new_txt += ch
-        elif ch not in set_unused:
-            new_txt += 'x'
+def dist():
+    pass
     
 def extract_punct(text):
     new_txt = ''
