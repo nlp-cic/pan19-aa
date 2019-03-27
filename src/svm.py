@@ -44,16 +44,16 @@ from sklearn.multiclass import OneVsRestClassifier
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn import preprocessing
 from sklearn.calibration import CalibratedClassifierCV
+from numpy import arange
 
-from util import empty_call, regular, reg_low, update_results, get_score
+from util import empty_call, regular, reg_low, update_results
 from struct_ import length_words, range_words_2, range_words_3, range_words_4, range_words_5, \
 length_sent_by_words, range_sent_by_words_3, range_sent_by_chars_5
 from punct import cons
 from vowel import vowels, vowels_with_withesp
 from evaluator import evaluate_all
 
-def represent_text(text,n,type_ngram):
-    
+def represent_text2(text, type_ngram):
     switcher = {
         'regular': regular,
         'reg_low': reg_low,
@@ -70,7 +70,10 @@ def represent_text(text,n,type_ngram):
         'vow_whit': vowels_with_withesp
     }
     func = switcher.get(type_ngram, empty_call)
-    text = func(text)
+    return func(text)
+    
+def represent_text(text,n,type_ngram):
+    text = represent_text2(text, type_ngram)
     
     # Extracts all character 'n'-grams from  a 'text'
     if n>0:
@@ -112,7 +115,6 @@ def baseline(path,outpath,n=3,ft=5,pt=0.1, type_ngram='regular'):
     infocollection = path+os.sep+'collection-info.json'
     problems = []
     language = []
-    probs = []
     with open(infocollection, 'r') as f:
         for attrib in json.load(f):
             problems.append(attrib['problem-name'])
@@ -135,7 +137,11 @@ def baseline(path,outpath,n=3,ft=5,pt=0.1, type_ngram='regular'):
         train_labels = [label for i,(text,label) in enumerate(train_docs)]
         vocabulary = extract_vocabulary(train_docs,n,ft,type_ngram)
         vectorizer = CountVectorizer(analyzer='char',ngram_range=(n,n),lowercase=False,vocabulary=vocabulary)
-        train_data = vectorizer.fit_transform(train_texts)
+        
+        modified_train_texts = [represent_text2(txt, type_ngram) for txt in train_texts]
+        #train_data = vectorizer.fit_transform(train_texts)
+        train_data = vectorizer.fit_transform(modified_train_texts)
+        
         train_data = train_data.astype(float)
         for i,v in enumerate(train_texts):
             train_data[i]=train_data[i]/len(train_texts[i])
@@ -146,7 +152,9 @@ def baseline(path,outpath,n=3,ft=5,pt=0.1, type_ngram='regular'):
         # Building test set
         test_docs=read_files(path+os.sep+problem,unk_folder)
         test_texts = [text for i,(text,label) in enumerate(test_docs)]
-        test_data = vectorizer.transform(test_texts)
+        modified_test_texts = [represent_text2(txt, type_ngram) for txt in test_texts]
+        test_data = vectorizer.transform(modified_test_texts)
+        #test_data = vectorizer.transform(test_texts)
         test_data = test_data.astype(float)
         for i,v in enumerate(test_texts):
             test_data[i]=test_data[i]/len(test_texts[i])
@@ -174,14 +182,15 @@ def baseline(path,outpath,n=3,ft=5,pt=0.1, type_ngram='regular'):
         for i,v in enumerate(predictions):
             out_data.append({'unknown-text': unk_filelist[i][pathlen:], 'predicted-author': v})
         
-        probs.append(proba)
         pathlib.Path(outpath).mkdir(parents=True, exist_ok=True)
+        df = pd.DataFrame(data=proba)
+        df.to_csv(outpath+os.sep+'probs-'+problem+'.csv', sep=',', header=False, index=False)
         
         with open(outpath+os.sep+'answers-'+problem+'.json', 'w') as f:
             json.dump(out_data, f, indent=4)
         print('\t', 'answers saved to file','answers-'+problem+'.json')
     print('elapsed time:', time.time() - start_time)
-    return probs
+
 
 def main():
     parser = argparse.ArgumentParser(description='PAN-19 Baseline Authorship Attribution Method')
@@ -199,48 +208,54 @@ def main():
         print('ERROR: The output folder is required')
         parser.exit(1)
     
-    '''
-    output_folder = args.o+os.sep+args.typ+os.sep+str(args.n) 
+    
+    output_folder = args.o+os.sep+args.typ+os.sep+str(args.n)+os.sep+str(args.pt)
     print('output folder:  '+output_folder+'\n')
     
     # execute methods
     baseline(args.i, output_folder, args.n, args.ft, args.pt, args.typ)
     evaluate_all(args.i, output_folder, output_folder)
-    update_results(args.o,args.typ,args.n,args.pt,args.ft,output_folder)
-    '''
-    
-    from numpy import arange
-    for ngram in range(1,9,1):
-        # create output folder
-        output_folder = args.o+os.sep+args.typ+os.sep+str(ngram) 
-        print('output folder:  '+output_folder+'\n')
-        
-        for pt in arange(0.01,0.02,0.01):
-            # execute methods
-            print('*** ngram: '+str(ngram)+' probThr: '+str(pt)+' ***')
-            
-            probs = baseline(args.i, output_folder, ngram, args.ft, pt, args.typ)
-            evaluate_all(args.i, output_folder, output_folder)
-            update_results(args.o,args.typ,ngram,pt,args.ft,output_folder, probs)
+    update_results(args.o,args.typ,args.n,args.pt,args.ft)
+    #write_probs(probs, pr)
 
-def unify(methods, ngrams):
-    list_meth = methods.split('&')
-    list_ngrs = ngrams.split('&')
-    if len(list_meth) != len(list_ngrs):
-        print('ERROR the number of methods and ngrams must be the same')
-        exit(1)
+def run_exhaustive(i, o, typ, ft):
+    min_ngram = 1
+    max_ngram = 9
+    min_pt = 0.01
+    max_pt = 0.1
+    incr_pt = 0.01
     
-    for i in enumerate(len(list_meth)):
-        path_method = 'results'+os.sep+list_meth[i]+os.sep+list_ngrs[i]
-        if not os.path.exists(path_method):
-            print(path_method+' doesnt exists')
-            continue
-        
-        current_score = get_score(path_method)
-        
+    for ngram in range(min_ngram, max_ngram,1):
+        for pt in arange(min_pt, max_pt, incr_pt):
+            # create output folder
+            output_folder = o+os.sep+typ+os.sep+str(ngram)+os.sep+str(pt)
+            print('output folder:  '+output_folder+'\n')
+            # execute methods
+            baseline(i, output_folder, ngram, ft, pt, typ)
+            evaluate_all(i, output_folder, output_folder)
+            update_results(o, typ, ngram, pt, ft)
+
+def meta_run(i, o, ft):
+    methods = ''' struct_len_word
+                            struct_len_sent
+                            struct_range_word_2
+                            struct_range_word_3
+                            struct_range_word_4
+                            struct_range_word_5,
+                            struct_range_sent_word_3
+                            struct_range_sent_char_5,
+                            punct
+                            vow
+                            vow_whit'''
+    for meth in methods.split('\n'):
+        meth = meth.strip()
+        print('Run exhaustive in method '+meth)
+        run_exhaustive(i, o, meth, ft)
+
 if __name__ == '__main__':
     main()
-
+    #meta_run('i', 'o', 'ft')
+    
 
   
     

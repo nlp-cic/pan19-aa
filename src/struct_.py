@@ -21,10 +21,8 @@ def range_sent_by_words_3(text):
     new_txt = ''
     
     for sent in sentences:
-        print(sent)
         tokens = nltk_word_tokenize(sent)
         size_sent = len(tokens)
-        print(size_sent)
         if size_sent <= 10:
             new_txt += 's'
         elif size_sent <= 20:

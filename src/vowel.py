@@ -40,4 +40,3 @@ def vowels_with_withesp(text):
 
     return new_txt
 
-
