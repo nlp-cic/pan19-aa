@@ -147,8 +147,14 @@ def baseline(path,outpath,n=3,ft=5,pt=0.1, type_ngram='regular'):
         
         modified_train_texts = [represent_text2(txt, type_ngram) for txt in train_texts]
         #train_data = vectorizer.fit_transform(train_texts)
-        train_data = vectorizer.fit_transform(modified_train_texts)
-        
+        try:
+            train_data = vectorizer.fit_transform(modified_train_texts)
+        except ValueError:
+            print('Empty vocabulary, setting frequency threshold as 1')
+            vocabulary = extract_vocabulary(train_docs, n, 1, type_ngram)
+            vectorizer = CountVectorizer(analyzer='char',ngram_range=(n,n),lowercase=False,vocabulary=vocabulary)
+            train_data = vectorizer.fit_transform(modified_train_texts)
+            
         train_data = train_data.astype(float)
         for i,v in enumerate(train_texts):
             train_data[i]=train_data[i]/len(train_texts[i])
@@ -192,6 +198,8 @@ def baseline(path,outpath,n=3,ft=5,pt=0.1, type_ngram='regular'):
         pathlib.Path(outpath).mkdir(parents=True, exist_ok=True)
         df = pd.DataFrame(data=proba)
         df.to_csv(outpath+os.sep+'probs-'+problem+'.csv', sep=',', header=False, index=False)
+        df = pd.DataFrame(data=clf.classes_)
+        df.to_csv(outpath+os.sep+'classes-'+problem+'.csv', sep=',', header=False, index=False)
         
         with open(outpath+os.sep+'answers-'+problem+'.json', 'w') as f:
             json.dump(out_data, f, indent=4)
@@ -227,7 +235,7 @@ def main():
 
 def run_exhaustive(i, o, typ, ft):
     min_ngram = 1
-    max_ngram = 5
+    max_ngram = 9
     min_pt = 0.1
     max_pt = 0.2
     incr_pt = 0.1
@@ -243,14 +251,9 @@ def run_exhaustive(i, o, typ, ft):
             update_results(o, typ, ngram, pt, ft)
 
 def meta_run(i, o, ft):
-    methods = ''' struct_len_word
-                            struct_len_sent
-                            struct_range_word_2
-                            struct_range_word_3
-                            struct_range_word_4
-                            struct_range_word_5,
+    methods = ''' struct_range_word_5
                             struct_range_sent_word_3
-                            struct_range_sent_char_5,
+                            struct_range_sent_char_5
                             punct_punct
                             punct_whitesp
                             punct_acc
@@ -262,7 +265,12 @@ def meta_run(i, o, ft):
                             vow_star
                             vow_whit
                             regular
-                            reg_low'''
+                            reg_low
+                            struct_len_word
+                            struct_len_sent
+                            struct_range_word_2
+                            struct_range_word_3
+                            struct_range_word_4'''
     for meth in methods.split('\n'):
         meth = meth.strip()
         print('Run exhaustive in method '+meth)
