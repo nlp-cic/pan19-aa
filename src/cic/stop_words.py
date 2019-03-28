@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 english = ['the', 'to', 'and', 'his', 'he', 'a', 'of', 'in', 'was', 'it', 'you', 'that', 's', 'him', 'her', 'on', 'as', 'at', 'with', 'for', 't', 'but', 'had', 'is', 'up', 'out', 'she', 'not', 'be', 'from', 'just', 'your', 'so', 'they', 'when', 'have', 'all', 'this', 'me', 'into', 'them', 'can', 'down', 'if', 'do', 'what', 'about', 'over', 'were', 'before']
 french = ['de', 'le', 'la', 'et', 'à', 'que', 'un', 'pas', 'il', 'en', 'son', 'se', 'ne', 'qui', 'une', 'dans', 'pour', 'lui', 'avait', 'sur', 'des', 'ce', 'du', 'était', 'sa', 'ses', 'je', 'l', 'avec', 'mais', 'tu', 'd', 'est', 'au', 'qu', 'elle', 'par', 'me', 's', 'n', 'même', 'vous', 'y', 'te', 'leur', 'ou', 'mon', 'on', 'suis', 'aux']
 italian = ['di', 'e', 'che', 'a', 'la', 'il', 'non', 'un', 'per', 'in', 'si', 'le', 'con', 'una', 'era', 'è', 'lo', 'gli', 'da', 'più', 'aveva', 'suo', 'i', 'sua', 'ma', 'del', 'come', 'se', 'lui', 'l', 'al', 'della', 'mi', 'ha', 'anche', 'ad', 'alla', 'sul', 'perché', 'tutto', 'ti', 'sono', 'loro', 'quella', 'lei', 'nel', 'cui', 'o', 'suoi', 'quello']
