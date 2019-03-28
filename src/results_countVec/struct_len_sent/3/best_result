@@ -1,0 +1,7 @@
+{
+    "best_score": 0.027,
+    "typ": "struct_len_sent",
+    "ngram": 3,
+    "pt": 0.1,
+    "ft": 5
+}

@@ -1,0 +1,7 @@
+{
+    "best_score": 0.013,
+    "typ": "punct_acc",
+    "ngram": 8,
+    "pt": 0.1,
+    "ft": 5
+}
