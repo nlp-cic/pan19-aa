@@ -34,7 +34,7 @@ def vowels_with_stars(text):
             new_txt += '*'
             
     return new_txt
-
+# insignificante
 def vowels_with_withesp(text):
     
     set_vowels, set_letters = get_sets()
