@@ -1,0 +1,7 @@
+{
+    "best_score": 0.01,
+    "typ": "prefix",
+    "ngram": 5,
+    "pt": 0.01,
+    "ft": 5
+}

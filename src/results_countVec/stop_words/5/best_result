@@ -1,0 +1,7 @@
+{
+    "best_score": 0.038,
+    "typ": "stop_words",
+    "ngram": 5,
+    "pt": 0.01,
+    "ft": 5
+}
