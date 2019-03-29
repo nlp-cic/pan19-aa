@@ -72,13 +72,21 @@ def unify(methods, ngram_orders, pt, in_folder, out_folder):
         for i,v in enumerate(predictions):
             out_data.append({'unknown-text': unk_filelist[i][pathlen:], 'predicted-author': v})
         '''
-unify('', '', 0.1, "pan19_CDAA_trainingDataset", '')
+        for i in range(len(list_meth)):
+            path_method = 'results'+os.sep+list_meth[i]+os.sep+list_ngrs[i]
+            if not os.path.exists(path_method):
+                print(path_method+' doesnt exists')
+                continue
+            
+            
+        sum_scores = 0.0
+unify('regular&punct_punct&vow_whit', '4&2&8', 0.1, "pan19_CDAA_trainingDataset", 'out_test')
 
 '''    
-    sum_scores = 0.0
+    
     probs_problms = []
     # iterate over every method
-    glob.glob('145592*.jpg')
+    
     
     for i in range(len(list_meth)):
         path_method = 'results'+os.sep+list_meth[i]+os.sep+list_ngrs[i]
