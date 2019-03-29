@@ -1,7 +1,7 @@
 {
-    "best_score": 0.092,
+    "best_score": 0.159,
     "typ": "struct_range_word_5",
     "ngram": 1,
-    "pt": 0.1,
+    "pt": 0.01,
     "ft": 5
 }

@@ -1,7 +1,7 @@
 {
-    "best_score": 0.046,
+    "best_score": 0.103,
     "typ": "punct_up",
     "ngram": 7,
-    "pt": 0.1,
+    "pt": 0.01,
     "ft": 5
 }

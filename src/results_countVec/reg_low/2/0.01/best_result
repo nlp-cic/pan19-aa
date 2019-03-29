@@ -1,0 +1,7 @@
+{
+    "best_score": 0.488,
+    "typ": "reg_low",
+    "ngram": 2,
+    "pt": 0.01,
+    "ft": 5
+}

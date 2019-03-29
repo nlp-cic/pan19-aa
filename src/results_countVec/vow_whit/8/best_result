@@ -1,7 +1,7 @@
 {
-    "best_score": 0.386,
+    "best_score": 0.391,
     "typ": "vow_whit",
     "ngram": 8,
-    "pt": 0.1,
+    "pt": 0.01,
     "ft": 5
 }

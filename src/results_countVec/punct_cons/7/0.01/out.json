@@ -1,0 +1,125 @@
+{
+    "overall_score": 0.171,
+    "problems": [
+        {
+            "macro-f1": 0.174,
+            "macro-precision": 0.222,
+            "macro-recall": 0.223,
+            "problem-name": "problem00001"
+        },
+        {
+            "macro-f1": 0.181,
+            "macro-precision": 0.228,
+            "macro-recall": 0.18,
+            "problem-name": "problem00002"
+        },
+        {
+            "macro-f1": 0.158,
+            "macro-precision": 0.151,
+            "macro-recall": 0.195,
+            "problem-name": "problem00003"
+        },
+        {
+            "macro-f1": 0.081,
+            "macro-precision": 0.148,
+            "macro-recall": 0.176,
+            "problem-name": "problem00004"
+        },
+        {
+            "macro-f1": 0.112,
+            "macro-precision": 0.122,
+            "macro-recall": 0.157,
+            "problem-name": "problem00005"
+        },
+        {
+            "macro-f1": 0.232,
+            "macro-precision": 0.248,
+            "macro-recall": 0.241,
+            "problem-name": "problem00006"
+        },
+        {
+            "macro-f1": 0.066,
+            "macro-precision": 0.06,
+            "macro-recall": 0.104,
+            "problem-name": "problem00007"
+        },
+        {
+            "macro-f1": 0.095,
+            "macro-precision": 0.199,
+            "macro-recall": 0.166,
+            "problem-name": "problem00008"
+        },
+        {
+            "macro-f1": 0.113,
+            "macro-precision": 0.094,
+            "macro-recall": 0.194,
+            "problem-name": "problem00009"
+        },
+        {
+            "macro-f1": 0.106,
+            "macro-precision": 0.092,
+            "macro-recall": 0.135,
+            "problem-name": "problem00010"
+        },
+        {
+            "macro-f1": 0.129,
+            "macro-precision": 0.147,
+            "macro-recall": 0.163,
+            "problem-name": "problem00011"
+        },
+        {
+            "macro-f1": 0.18,
+            "macro-precision": 0.255,
+            "macro-recall": 0.181,
+            "problem-name": "problem00012"
+        },
+        {
+            "macro-f1": 0.346,
+            "macro-precision": 0.344,
+            "macro-recall": 0.433,
+            "problem-name": "problem00013"
+        },
+        {
+            "macro-f1": 0.378,
+            "macro-precision": 0.323,
+            "macro-recall": 0.491,
+            "problem-name": "problem00014"
+        },
+        {
+            "macro-f1": 0.22,
+            "macro-precision": 0.167,
+            "macro-recall": 0.365,
+            "problem-name": "problem00015"
+        },
+        {
+            "macro-f1": 0.179,
+            "macro-precision": 0.24,
+            "macro-recall": 0.167,
+            "problem-name": "problem00016"
+        },
+        {
+            "macro-f1": 0.195,
+            "macro-precision": 0.195,
+            "macro-recall": 0.327,
+            "problem-name": "problem00017"
+        },
+        {
+            "macro-f1": 0.248,
+            "macro-precision": 0.225,
+            "macro-recall": 0.314,
+            "problem-name": "problem00018"
+        },
+        {
+            "macro-f1": 0.14,
+            "macro-precision": 0.128,
+            "macro-recall": 0.21,
+            "problem-name": "problem00019"
+        },
+        {
+            "macro-f1": 0.078,
+            "macro-precision": 0.086,
+            "macro-recall": 0.096,
+            "problem-name": "problem00020"
+        }
+    ]
+}
