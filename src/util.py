@@ -16,7 +16,10 @@ def str_as_set(str_in):
 def empty_call(text):
     print('ERROR: -typ argument is wrong')
     exit(1)
-    
+def empty_call2(text, size_grams, language):
+    print('ERROR: -typ argument is wrong')
+    exit(1)
+
 def regular(text):
     return text
 

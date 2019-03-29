@@ -46,12 +46,31 @@ from sklearn import preprocessing
 from sklearn.calibration import CalibratedClassifierCV
 from numpy import arange
 
-from util import empty_call, regular, reg_low, update_results
+from evaluator import evaluate_all
+from util import empty_call, empty_call2, regular, reg_low, update_results
 from struct_ import length_words, range_words_2, range_words_3, range_words_4, range_words_5, \
 length_sent_by_words, range_sent_by_words_3, range_sent_by_chars_5
 from punct import punct_, whitesp, acc, vow, cons, up, acc_vow_up
 from vowel import vowels, vowels_with_stars, vowels_with_withesp
-from evaluator import evaluate_all
+from words import pos_tag_n_grams, func_stop_words, func_prefix, func_sufix, func_space_prefix, \
+func_space_sufix, func_beg_punct, func_mid_punct, func_end_punct
+
+word_methods = ['pos_tag', 'stop_words', 'prefix', 'sufix', 'space_prefix', 'space_sufix', 'beg_punct', 'mid_punct', 'end_punct']
+
+def represent_text3(text, type_ngram, size_grams, language):
+    switcher = {
+        'pos_tag': pos_tag_n_grams,
+        'stop_words': func_stop_words,
+        'prefix': func_prefix,
+        'sufix': func_sufix,
+        'space_prefix': func_space_prefix,
+        'space_sufix': func_space_sufix,
+        'beg_punct': func_beg_punct,
+        'mid_punct': func_mid_punct,
+        'end_punct': func_end_punct
+    }
+    func = switcher.get(type_ngram, empty_call2)
+    return func(text, size_grams, language)
 
 def represent_text2(text, type_ngram):
     switcher = {
@@ -116,7 +135,7 @@ def extract_vocabulary(texts,n,ft,type_ngram):
             vocabulary.append(i)
     return vocabulary
 
-def baseline(path,outpath,n=3,ft=5,pt=0.1, type_ngram='regular'):
+def baseline(path, outpath, n=3, ft=5, pt=0.1, type_ngram='regular'):
     start_time = time.time()
     # Reading information about the collection
     infocollection = path+os.sep+'collection-info.json'
@@ -142,17 +161,22 @@ def baseline(path,outpath,n=3,ft=5,pt=0.1, type_ngram='regular'):
             train_docs.extend(read_files(path+os.sep+problem,candidate))
         train_texts = [text for i,(text,label) in enumerate(train_docs)]
         train_labels = [label for i,(text,label) in enumerate(train_docs)]
-        vocabulary = extract_vocabulary(train_docs,n,ft,type_ngram)
-        vectorizer = CountVectorizer(analyzer='char',ngram_range=(n,n),lowercase=False,vocabulary=vocabulary)
         
-        modified_train_texts = [represent_text2(txt, type_ngram) for txt in train_texts]
-        #train_data = vectorizer.fit_transform(train_texts)
+        type_analizer = 'char' 
+        if type_ngram in word_methods:
+            #text, type_ngram, size_grams, language
+            modified_train_texts = [represent_text3(txt, type_ngram) for txt in train_texts]
+            type_analizer = 'word'
+        else:
+            modified_train_texts = [represent_text2(txt, type_ngram) for txt in train_texts]
+        vocabulary = extract_vocabulary(train_docs, n, ft, type_ngram)
+        vectorizer = CountVectorizer(analyzer=type_analizer, ngram_range=(n,n), lowercase=False, vocabulary=vocabulary)
         try:
             train_data = vectorizer.fit_transform(modified_train_texts)
         except ValueError:
             print('Empty vocabulary, setting frequency threshold as 1')
             vocabulary = extract_vocabulary(train_docs, n, 1, type_ngram)
-            vectorizer = CountVectorizer(analyzer='char',ngram_range=(n,n),lowercase=False,vocabulary=vocabulary)
+            vectorizer = CountVectorizer(analyzer=type_analizer, ngram_range=(n,n), lowercase=False, vocabulary=vocabulary)
             train_data = vectorizer.fit_transform(modified_train_texts)
             
         train_data = train_data.astype(float)
@@ -236,9 +260,9 @@ def main():
 def run_exhaustive(i, o, typ, ft):
     min_ngram = 1
     max_ngram = 9
-    min_pt = 0.1
-    max_pt = 0.2
-    incr_pt = 0.1
+    min_pt = 0.01
+    max_pt = 0.02
+    incr_pt = 0.01
     
     for ngram in range(min_ngram, max_ngram,1):
         for pt in arange(min_pt, max_pt, incr_pt):
@@ -251,10 +275,7 @@ def run_exhaustive(i, o, typ, ft):
             update_results(o, typ, ngram, pt, ft)
 
 def meta_run(i, o, ft):
-    methods = ''' struct_range_word_5
-                            struct_range_sent_word_3
-                            struct_range_sent_char_5
-                            punct_punct
+    methods = ''' punct_punct
                             punct_whitesp
                             punct_acc
                             punct_vow
@@ -264,13 +285,17 @@ def meta_run(i, o, ft):
                             vow
                             vow_star
                             vow_whit
-                            regular
-                            reg_low
                             struct_len_word
                             struct_len_sent
                             struct_range_word_2
                             struct_range_word_3
-                            struct_range_word_4'''
+                            struct_range_word_4
+                            struct_range_word_5
+                            struct_range_sent_word_3
+                            struct_range_sent_char_5
+                            regular
+                            reg_low'''
+    
     for meth in methods.split('\n'):
         meth = meth.strip()
         print('Run exhaustive in method '+meth)
