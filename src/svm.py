@@ -36,7 +36,7 @@ import json
 import argparse
 import time
 import codecs
-import pathlib
+import pathlib2
 import pandas as pd
 from collections import defaultdict
 from sklearn.svm import SVC
@@ -45,7 +45,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn import preprocessing
 from sklearn.calibration import CalibratedClassifierCV
 from numpy import arange
-
+from nltk.tokenize import RegexpTokenizer
 from evaluator import evaluate_all
 from util import empty_call, empty_call2, regular, reg_low, update_results
 from struct_ import length_words, range_words_2, range_words_3, range_words_4, range_words_5, \
@@ -55,7 +55,7 @@ from vowel import vowels, vowels_with_stars, vowels_with_withesp
 from words import pos_tag_n_grams, func_stop_words, func_prefix, func_sufix, func_space_prefix, \
 func_space_sufix, func_beg_punct, func_mid_punct, func_end_punct
 
-word_methods = ['pos_tag', 'stop_words', 'prefix', 'sufix', 'space_prefix', 'space_sufix', 'beg_punct', 'mid_punct', 'end_punct']
+word_methods = ['stop_words', 'prefix', 'sufix', 'space_prefix', 'space_sufix', 'beg_punct', 'mid_punct', 'end_punct'] #, 'pos_tag'
 
 def represent_text3(text, type_ngram, size_grams, language):
     switcher = {
@@ -162,21 +162,25 @@ def baseline(path, outpath, n=3, ft=5, pt=0.1, type_ngram='regular'):
         train_texts = [text for i,(text,label) in enumerate(train_docs)]
         train_labels = [label for i,(text,label) in enumerate(train_docs)]
         
-        type_analizer = 'char' 
         if type_ngram in word_methods:
-            #text, type_ngram, size_grams, language
-            modified_train_texts = [represent_text3(txt, type_ngram) for txt in train_texts]
-            type_analizer = 'word'
+            modified_train_texts = [represent_text3(txt, type_ngram, 3, language[index]) for txt in train_texts]
+            tokenizer_ = RegexpTokenizer(r'[|~|]+', gaps=True)
+            vectorizer = CountVectorizer(analyzer='word', ngram_range=(n,n), lowercase=False, \
+                                                                                        tokenizer=tokenizer_.tokenize, min_df=5)
         else:
             modified_train_texts = [represent_text2(txt, type_ngram) for txt in train_texts]
-        vocabulary = extract_vocabulary(train_docs, n, ft, type_ngram)
-        vectorizer = CountVectorizer(analyzer=type_analizer, ngram_range=(n,n), lowercase=False, vocabulary=vocabulary)
+            vocabulary = extract_vocabulary(train_docs, n, ft, type_ngram)
+            vectorizer = CountVectorizer(analyzer='char', ngram_range=(n,n), lowercase=False, vocabulary=vocabulary)
         try:
             train_data = vectorizer.fit_transform(modified_train_texts)
         except ValueError:
             print('Empty vocabulary, setting frequency threshold as 1')
-            vocabulary = extract_vocabulary(train_docs, n, 1, type_ngram)
-            vectorizer = CountVectorizer(analyzer=type_analizer, ngram_range=(n,n), lowercase=False, vocabulary=vocabulary)
+            if type_ngram in word_methods:
+                vectorizer = CountVectorizer(analyzer='word', ngram_range=(n,n), lowercase=False, \
+                                                                                        tokenizer=tokenizer_.tokenize, min_df=1)
+            else:
+                vocabulary = extract_vocabulary(train_docs, n, 1, type_ngram)
+                vectorizer = CountVectorizer(analyzer='char', ngram_range=(n,n), lowercase=False, vocabulary=vocabulary)
             train_data = vectorizer.fit_transform(modified_train_texts)
             
         train_data = train_data.astype(float)
@@ -185,11 +189,17 @@ def baseline(path, outpath, n=3, ft=5, pt=0.1, type_ngram='regular'):
         print('\t', 'language: ', language[index])
         print('\t', len(candidates), 'candidate authors')
         print('\t', len(train_texts), 'known texts')
-        print('\t', 'vocabulary size:', len(vocabulary))
+        if type_ngram not in word_methods:
+            print('\t', 'vocabulary size:', len(vocabulary))
+        else:
+            print('\t', 'train_data size', train_data.shape)
         # Building test set
         test_docs=read_files(path+os.sep+problem,unk_folder)
         test_texts = [text for i,(text,label) in enumerate(test_docs)]
-        modified_test_texts = [represent_text2(txt, type_ngram) for txt in test_texts]
+        if type_ngram in word_methods:
+            modified_test_texts = [represent_text3(txt, type_ngram, 3, language[index]) for txt in test_texts]
+        else:
+            modified_test_texts = [represent_text2(txt, type_ngram) for txt in test_texts]
         test_data = vectorizer.transform(modified_test_texts)
         #test_data = vectorizer.transform(test_texts)
         test_data = test_data.astype(float)
@@ -218,8 +228,12 @@ def baseline(path, outpath, n=3, ft=5, pt=0.1, type_ngram='regular'):
         pathlen=len(path+os.sep+problem+os.sep+unk_folder+os.sep)
         for i,v in enumerate(predictions):
             out_data.append({'unknown-text': unk_filelist[i][pathlen:], 'predicted-author': v})
-        
-        pathlib.Path(outpath).mkdir(parents=True, exist_ok=True)
+        print(len(unk_filelist))
+        print(len(out_data))
+        print(unk_filelist[0])
+        print(out_data[0])
+        '''
+        pathlib2.Path(outpath).mkdir(parents=True, exist_ok=True)
         df = pd.DataFrame(data=proba)
         df.to_csv(outpath+os.sep+'probs-'+problem+'.csv', sep=',', header=False, index=False)
         df = pd.DataFrame(data=clf.classes_)
@@ -227,7 +241,7 @@ def baseline(path, outpath, n=3, ft=5, pt=0.1, type_ngram='regular'):
         
         with open(outpath+os.sep+'answers-'+problem+'.json', 'w') as f:
             json.dump(out_data, f, indent=4)
-        print('\t', 'answers saved to file','answers-'+problem+'.json')
+        print('\t', 'answers saved to file','answers-'+problem+'.json')'''
     print('elapsed time:', time.time() - start_time)
 
 
@@ -258,7 +272,7 @@ def main():
     #write_probs(probs, pr)
 
 def run_exhaustive(i, o, typ, ft):
-    min_ngram = 1
+    min_ngram = 2
     max_ngram = 9
     min_pt = 0.01
     max_pt = 0.02
@@ -296,14 +310,16 @@ def meta_run(i, o, ft):
                             regular
                             reg_low'''
     
-    for meth in methods.split('\n'):
+    for meth in word_methods:
+    #for meth in methods.split('\n'):
         meth = meth.strip()
         print('Run exhaustive in method '+meth)
         run_exhaustive(i, o, meth, ft)
 
 if __name__ == '__main__':
     #main()
-    meta_run("src\\pan19_CDAA_trainingDataset", "src\\results_countVec", 5)
+    #meta_run("src\\pan19_CDAA_trainingDataset", "src\\results_countVec", 5)
+    run_exhaustive("src"+os.sep+"pan19_CDAA_trainingDataset", "src\\results_countVec", 'end_punct', 5)
     
 
   

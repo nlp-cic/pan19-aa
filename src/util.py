@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
+import glob
+import json
 import pandas as pd
 from os import sep as os_sep
 from os.path import exists as os_exists
@@ -35,16 +37,49 @@ def get_score(output_folder):
     
     return current_value
 
-def unify(methods, ngram_orders, pt, out_folder):
+def unify(methods, ngram_orders, pt, in_folder, out_folder):
     list_meth = methods.split('&')
     list_ngrs = ngram_orders.split('&')
     if len(list_meth) != len(list_ngrs):
         print('ERROR the number of methods and ngram orders must be the same')
         exit(1)
     
+    infocollection = in_folder+os.sep+'collection-info.json'
+    problems = []
+    with open(infocollection, 'r') as f:
+        for attrib in json.load(f):
+            problems.append(attrib['problem-name'])
+    for problem in problems:
+        print(problem)
+        # Reading information about the problem
+        infoproblem = in_folder+os.sep+problem+os.sep+'problem-info.json'
+        candidates = []
+        with open(infoproblem, 'r') as f:
+            fj = json.load(f)
+            unk_folder = fj['unknown-folder']
+            for attrib in fj['candidate-authors']:
+                candidates.append(attrib['author-name'])
+        
+        out_data=[]
+        unk_filelist = glob.glob(in_folder+os.sep+problem+os.sep+unk_folder+os.sep+'*.txt')
+        pathlen=len(in_folder+os.sep+problem+os.sep+unk_folder+os.sep)
+        
+        for i,v in enumerate(unk_filelist):
+            out_data.append(unk_filelist[i][pathlen:])
+        print(unk_filelist[0])
+        print(out_data[0])
+        '''
+        for i,v in enumerate(predictions):
+            out_data.append({'unknown-text': unk_filelist[i][pathlen:], 'predicted-author': v})
+        '''
+unify('', '', 0.1, "pan19_CDAA_trainingDataset", '')
+
+'''    
     sum_scores = 0.0
     probs_problms = []
     # iterate over every method
+    glob.glob('145592*.jpg')
+    
     for i in range(len(list_meth)):
         path_method = 'results'+os.sep+list_meth[i]+os.sep+list_ngrs[i]
         if not os.path.exists(path_method):
@@ -72,7 +107,7 @@ def unify(methods, ngram_orders, pt, out_folder):
             for k in range(len(probs_problms[i][j])):
                 probs_problms[i][j][k] = probs_problms[i][j][k]/20.0 
     '''
-            count=0
+'''            count=0
             for i,p in enumerate(predictions):
                 sproba=sorted(proba[i],reverse=True)
                 if sproba[0]-sproba[1]<pt:

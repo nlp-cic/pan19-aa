@@ -1,16 +1,14 @@
+# -*- coding: utf-8 -*-
 import logging
 logger = logging.getLogger('TreeTagger')
 logger.propagate = False
-
+import nltk
 from nltk import tokenize
-from collections import defaultdict
-import re
 from string import punctuation
+import re
 
 import treetaggerwrapper as ttw
-import pprint
 from cic.stop_words import english, french, italian, spanish
-
 
 
 #--------------------------------------------------------------------------------------------------------------------
@@ -29,7 +27,7 @@ def bag_of_words(text, current_language):
     return tokens
 
 #--------------------------------------------------------------------------------------------------------------------
-def pos_tag_n_grams(text, current_language):
+def pos_tag_n_grams(text, size_grams, current_language):
     text = re.sub(r" +", " ", re.sub(r"\.", "\. ", pre_proc_text(text)))
     #n = [1, 4]#range(1, 6)
 
@@ -45,21 +43,27 @@ def pos_tag_n_grams(text, current_language):
         else:
             tags.append(tag[1])
 
-    return " ".join(tags)
+    return "|~|".join(tags)
 
 #--------------------------------------------------------------------------------------------------------------------
-def func_stop_words(text, current_language):
+def func_stop_words(text, size_grams, current_language):
     #sizes = [5]#range(1, 9)
 
-    if current_language == 'english':
+    if current_language == 'en':
+        current_language = 'english'
         stop_words = english
-    if current_language == 'french':
+    elif current_language == 'fr':
+        current_language = 'french'
         stop_words = french
-    if current_language == 'italian':
+    elif current_language == 'it':
+        current_language = 'italian'
         stop_words = italian
-    if current_language == 'spanish':
+    elif current_language == 'sp':
+        current_language = 'spanish'
         stop_words = spanish
-
+    else:
+        print('FATAL language not found')
+    
     text = re.sub(r" +", " ", re.sub(r"\n", " ", pre_proc_text(text)))
     values = tokenize.word_tokenize(text=text, language=current_language)
     tokens = []
@@ -68,32 +72,32 @@ def func_stop_words(text, current_language):
         if values[i] in stop_words:
             tokens.append(stop_words[stop_words.index(values[i])])
 
-    return " ".join(tokens)
+    return "|~|".join(tokens)
 
 
 # -------------------------------------------------------------------------------------
 # affix
-def func_prefix(text, size_grams):
+def func_prefix(text, size_grams, current_language):
     tokens = []
     text = re.sub(r"\s+", " ", re.sub(r"\n", " ", pre_proc_text(text))).split(" ")
     for i in range(len(text)):
         if len(text[i]) > size_grams:
             tokens.append(text[i][:size_grams])
 
-    return " ".join(tokens)
+    return "|~|".join(tokens)
 
 
-def func_sufix(text, size_grams):
+def func_sufix(text, size_grams, current_language):
     tokens = []
     text = re.sub(r"\s+", " ", re.sub(r"\n", " ", pre_proc_text(text))).split(" ")
     for i in range(len(text)):
         if len(text[i]) > size_grams:
             tokens.append(text[i][-size_grams:])
 
-    return " ".join(tokens)
+    return "|~|".join(tokens)
 
 
-def func_space_prefix(text, size_grams):
+def func_space_prefix(text, size_grams, current_language):
     global punctuation
     tokens = []
     paragraphs = pre_proc_text(text).split("\n")
@@ -103,10 +107,10 @@ def func_space_prefix(text, size_grams):
             if len(token) > size_grams - 2 and re.search("[" + punctuation + "]", token[:(size_grams - 1)]) is None:
                 tokens.append("_" + token[:(size_grams - 1)])
 
-    return " ".join(tokens)
+    return "|~|".join(tokens)
 
 
-def func_space_sufix(text, size_grams):
+def func_space_sufix(text, size_grams, current_language):
     global punctuation
     tokens = []
     paragraphs = pre_proc_text(text).split("\n")
@@ -115,7 +119,7 @@ def func_space_sufix(text, size_grams):
         for token in values:
             if len(token) > size_grams - 2 and re.search("[" + punctuation + "]", token[-(size_grams - 1):]) is None:
                 tokens.append(token[-(size_grams - 1):])
-    return " ".join(tokens)
+    return "|~|".join(tokens)
 
 
 # -------------------------------------------------------------------------------------
@@ -170,7 +174,7 @@ def func_multi_word(text, size_grams):
 
 # -------------------------------------------------------------------------------------
 # punct
-def func_beg_punct(text, size_grams):
+def func_beg_punct(text, size_grams, current_language):
     global punctuation
     tokens = []
     paragraphs = pre_proc_text(text).split("\n")
@@ -179,10 +183,10 @@ def func_beg_punct(text, size_grams):
             if paraph[k] in punctuation and re.search("[" + punctuation + "]", paraph[k + 1: k + size_grams]) is None:
                 tokens.append(paraph[k: k + size_grams])
 
-    return " ".join(tokens)
+    return "|~|".join(tokens)
 
 
-def func_mid_punct(text, size_grams):
+def func_mid_punct(text, size_grams, current_language):
     global punctuation
     tokens = []
 
@@ -216,10 +220,10 @@ def func_mid_punct(text, size_grams):
                         if k <= 0 or len(values[i][(m - k): (m + w)]) != size_grams:
                             break
 
-    return " ".join(tokens)
+    return "|~|".join(tokens)
 
 
-def func_end_punct(text, size_grams):
+def func_end_punct(text, size_grams, current_language):
     global punctuation
     tokens = []
     paragraphs = pre_proc_text(text).split("\n")
@@ -229,4 +233,12 @@ def func_end_punct(text, size_grams):
                                                                          paraph[k: k + (size_grams - 1)]) is None:
                 tokens.append(paraph[k: k + size_grams])
 
-    return " ".join(tokens)
+    return "|~|".join(tokens)
+'''
+#tokenizer = RegexpTokenizer('\s+', gaps=True)
+print('test')
+tokenizer = tokenize.RegexpTokenizer(r'[|~|]+', gaps=True)
+s = "Good muffins cost $3.88\nin New York.  Please buy me\ntwo of them.\n\nThanks."
+t = func_stop_words(s, 3, 'en')
+print(t)
+print(tokenizer.tokenize(t))'''
