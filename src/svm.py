@@ -38,6 +38,7 @@ import time
 import codecs
 import pathlib2
 import pandas as pd
+import numpy as np
 from collections import defaultdict
 from sklearn.svm import SVC
 from sklearn.multiclass import OneVsRestClassifier
@@ -52,9 +53,9 @@ from struct_ import length_words, range_words_2, range_words_3, range_words_4, r
 length_sent_by_words, range_sent_by_words_3, range_sent_by_chars_5
 from punct import punct_, whitesp, acc, vow, cons, up, acc_vow_up
 from vowel import vowels, vowels_with_stars, vowels_with_withesp
-from words import pos_tag_n_grams, func_stop_words, func_prefix, func_sufix, func_space_prefix, \
+'''from words import pos_tag_n_grams, func_stop_words, func_prefix, func_sufix, func_space_prefix, \
 func_space_sufix, func_beg_punct, func_mid_punct, func_end_punct
-
+'''
 word_methods = ['stop_words', 'prefix', 'sufix', 'space_prefix', 'space_sufix', 'beg_punct', 'mid_punct', 'end_punct'] #, 'pos_tag'
 
 def represent_text3(text, type_ngram, size_grams, language):
@@ -228,20 +229,21 @@ def baseline(path, outpath, n=3, ft=5, pt=0.1, type_ngram='regular'):
         pathlen=len(path+os.sep+problem+os.sep+unk_folder+os.sep)
         for i,v in enumerate(predictions):
             out_data.append({'unknown-text': unk_filelist[i][pathlen:], 'predicted-author': v})
+        print(proba.shape)
         print(len(unk_filelist))
         print(len(out_data))
-        print(unk_filelist[0])
-        print(out_data[0])
-        '''
+        
+        print(outpath)
         pathlib2.Path(outpath).mkdir(parents=True, exist_ok=True)
-        df = pd.DataFrame(data=proba)
-        df.to_csv(outpath+os.sep+'probs-'+problem+'.csv', sep=',', header=False, index=False)
+        np.save(outpath+os.sep+'probs-'+problem+'.npy', proba)
+        #df = pd.DataFrame(data=proba)
+        #df.to_csv(outpath+os.sep+'probs-'+problem+'.csv', sep=',', header=False, index=False)
         df = pd.DataFrame(data=clf.classes_)
         df.to_csv(outpath+os.sep+'classes-'+problem+'.csv', sep=',', header=False, index=False)
         
         with open(outpath+os.sep+'answers-'+problem+'.json', 'w') as f:
             json.dump(out_data, f, indent=4)
-        print('\t', 'answers saved to file','answers-'+problem+'.json')'''
+        print('\t', 'answers saved to file','answers-'+problem+'.json')
     print('elapsed time:', time.time() - start_time)
 
 
@@ -319,8 +321,6 @@ def meta_run(i, o, ft):
 if __name__ == '__main__':
     #main()
     #meta_run("src\\pan19_CDAA_trainingDataset", "src\\results_countVec", 5)
-    run_exhaustive("src"+os.sep+"pan19_CDAA_trainingDataset", "src\\results_countVec", 'end_punct', 5)
-    
-
-  
+    #run_exhaustive("src"+os.sep+"pan19_CDAA_trainingDataset", "src\\results_countVec", 'end_punct', 5)
+    baseline('pan19_CDAA_trainingDataset', 'results_countVec/regular/4/0.1', 4, 5, 0.1, 'regular')
     

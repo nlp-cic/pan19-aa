@@ -3,6 +3,7 @@ import os
 import glob
 import json
 import pandas as pd
+import numpy as np
 from os import sep as os_sep
 from os.path import exists as os_exists
 from json import load as json_load
@@ -60,26 +61,70 @@ def unify(methods, ngram_orders, pt, in_folder, out_folder):
             for attrib in fj['candidate-authors']:
                 candidates.append(attrib['author-name'])
         
-        out_data=[]
+        names_unknown=[]
         unk_filelist = glob.glob(in_folder+os.sep+problem+os.sep+unk_folder+os.sep+'*.txt')
         pathlen=len(in_folder+os.sep+problem+os.sep+unk_folder+os.sep)
         
         for i,v in enumerate(unk_filelist):
-            out_data.append(unk_filelist[i][pathlen:])
-        print(unk_filelist[0])
-        print(out_data[0])
-        '''
-        for i,v in enumerate(predictions):
-            out_data.append({'unknown-text': unk_filelist[i][pathlen:], 'predicted-author': v})
-        '''
+            names_unknown.append(unk_filelist[i][pathlen:])
+        
+        
+        sum_probs = np.zeros((len(names_unknown), len(candidates)))
+        sum_scores = 0.0
         for i in range(len(list_meth)):
-            path_method = 'results'+os.sep+list_meth[i]+os.sep+list_ngrs[i]
+            path_method = 'results_countVec'+os.sep+list_meth[i]+os.sep+list_ngrs[i]+os.sep+str(pt)
             if not os.path.exists(path_method):
                 print(path_method+' doesnt exists')
                 continue
+
+            # get score for current method
+            current_score = get_score(path_method)
+            trunk_score = float('%.2f'%(current_score))
+            sum_scores += trunk_score
             
+            # read probs matrix
+            current_probs = pd.read_csv(path_method+os.sep+'probs-'+problem+'.csv', header=None)
+            new_probs = current_probs.values * current_score
+            sum_probs = np.add(sum_probs, new_probs)
+        
+        sum_probs /= sum_scores
+        print(sum_probs.shape)
+        for h in range(5):
+            for k in range(9):
+                print str(sum_probs[h][k]) + ",",
+            print("\n")
+        exit(0)
+        
+        count = 0
+        predictions = []
+        for i,proba in enumerate(sum_probs):
+            #print(proba)
+            #print(proba.argmax(axis=0))
             
-        sum_scores = 0.0
+            sproba=sorted(proba,reverse=True)
+            if sproba[0]-sproba[1]<pt:
+                predictions.append(u'<UNK>')
+                count=count+1
+            else:
+                max_index = proba.argmax(axis=0)
+                predictions.append(candidates[max_index])
+            #print(sproba[0]-sproba[1])
+            #print(predictions[i])
+            #if i>5:
+            #    exit(0)
+
+        print('\t',count,'texts left unattributed')
+        
+        out_data = []
+        for i,v in enumerate(predictions):
+            out_data.append({'unknown-text': unk_filelist[i][pathlen:], 'predicted-author': v})
+        
+        import pathlib2
+        pathlib2.Path(out_folder).mkdir(parents=True, exist_ok=True)
+        with open(out_folder+os.sep+'answers-'+problem+'.json', 'w') as f:
+            json.dump(out_data, f, indent=4)
+        print('\t', 'answers saved to file','answers-'+problem+'.json')
+
 unify('regular&punct_punct&vow_whit', '4&2&8', 0.1, "pan19_CDAA_trainingDataset", 'out_test')
 
 '''    
